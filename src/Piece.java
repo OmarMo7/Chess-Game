@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chess_game;
+
 /**
  *
  * @author Omar Mostafa
  */
-public class main {
+public class Piece {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    private static class position {
+        int x_axis, y_axis;
+
+        public position(int x_axis, int y_axis) {
+            this.x_axis = x_axis;
+            this.y_axis = y_axis;
+        }
     }
-    
 }
