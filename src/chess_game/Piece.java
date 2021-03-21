@@ -33,7 +33,7 @@ public class Piece {
     ArrayList calculateCells() {
         switch (this.name) {
         case "Pawn":
-            if (this.y_axis >= 7) // Precation condition
+            if (this.y_axis >= 7) // Precaution condition
                 break;
             if (this.y_axis < 6) {
                 // Classic move of a pawn
@@ -68,6 +68,22 @@ public class Piece {
             //
         case "Rook":
             //
+            if (this.x_axis < 8 && this.y_axis < 8) {
+                // Checking for any block in the column where Rook is located
+                for (int i = 1; i < 8; i++) {
+                    if (board[this.x_axis][this.y_axis + i].isOccupied) {
+                        cellsAllowed.add(board[this.x_axis][this.y_axis + i]);
+                    } else
+                        break;
+                }
+                // Checking for any block in the row where Rook is located
+                for (int i = 1; i < 8; i++) {
+                    if (board[this.x_axis + i][this.y_axis].isOccupied) {
+                        cellsAllowed.add(board[this.x_axis][this.y_axis + i]);
+                    } else // If a block found.. Cells allowed to move-at stops there
+                        break;
+                }
+            }
         case "Queen":
             //
         case "King":
