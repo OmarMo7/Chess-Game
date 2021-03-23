@@ -68,18 +68,18 @@ public class Piece {
             //
         case "Rook":
             //
-            if (this.x_axis < 8 && this.y_axis < 8) {
+            if (this.x_axis < 8 && this.y_axis < 8) { // b = 8 - this.x_axis //for (int i = b; i <
                 // Checking for any block in the column where Rook is located
-                for (int i = 1; i < 8; i++) {
-                    if (board[this.x_axis][this.y_axis + i].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis][this.y_axis + i]);
+                for (int i = 0; i < 8; i++) {
+                    if (!board[this.x_axis][i].isOccupied) {
+                        cellsAllowed.add(board[this.x_axis][i]);
                     } else
                         break;
                 }
                 // Checking for any block in the row where Rook is located
-                for (int i = 1; i < 8; i++) {
-                    if (board[this.x_axis + i][this.y_axis].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis][this.y_axis + i]);
+                for (int i = 0; i < 8; i++) {
+                    if (!board[i][this.y_axis].isOccupied) {
+                        cellsAllowed.add(board[i][this.y_axis]);
                     } else // If a block found.. Cells allowed to move-at stops there
                         break;
                 }
