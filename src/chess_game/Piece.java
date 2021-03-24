@@ -63,35 +63,52 @@ public class Piece {
             }
 
         case "Knight":
-            if (this.x_axis < 8 && this.y_axis < 8) {
-                if (this.x_axis >= 2 && this.y_axis >= 2) {
+            if (this.x_axis > 8 && this.y_axis > 8) {
+                // level 4
+                if (this.y_axis >= 2 && this.x_axis >= 1) {
+                    // left
                     if (!board[this.x_axis - 1][this.y_axis - 2].isOccupied) {
                         cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 2]);
                     }
-                    if (!board[this.x_axis - 2][this.y_axis - 1].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis - 2][this.y_axis - 2]);
-                    }
-                    if (!board[this.x_axis - 1][this.y_axis + 2].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 2]);
-                    }
-                    if (!board[this.x_axis - 2][this.y_axis + 1].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis - 2][this.y_axis + 1]);
-                    }
+                    // Right
                     if (!board[this.x_axis + 1][this.y_axis - 2].isOccupied) {
                         cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 2]);
                     }
+                }
+                // Level 3
+                if (this.y_axis >= 1 && this.x_axis >= 2) {
+                    // Left
+                    if (!board[this.x_axis - 2][this.y_axis - 1].isOccupied) {
+                        cellsAllowed.add(board[this.x_axis - 2][this.y_axis - 2]);
+                    }
+                    // Right
                     if (!board[this.x_axis + 2][this.y_axis - 1].isOccupied) {
                         cellsAllowed.add(board[this.x_axis + 2][this.y_axis - 1]);
                     }
                 }
-                if (!board[this.x_axis + 1][this.y_axis + 2].isOccupied) {
-                    cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 2]);
+                // Level 2
+                if (this.x_axis >= 1 && this.y_axis >= 1) {
+                    // Left
+                    if (!board[this.x_axis - 2][this.y_axis + 1].isOccupied) {
+                        cellsAllowed.add(board[this.x_axis - 2][this.y_axis + 1]);
+                    }
+                    // Right
+                    if (!board[this.x_axis + 2][this.y_axis + 1].isOccupied) {
+                        cellsAllowed.add(board[this.x_axis + 2][this.y_axis + 1]);
+                    }
                 }
-                if (!board[this.x_axis + 2][this.y_axis + 1].isOccupied) {
-                    cellsAllowed.add(board[this.x_axis + 2][this.y_axis + 1]);
+                // Level 1
+                if (this.x_axis >= 2 && this.y_axis >= 1) {
+                    // Left
+                    if (!board[this.x_axis - 1][this.y_axis + 2].isOccupied) {
+                        cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 2]);
+                    }
+                    // Right
+                    if (!board[this.x_axis + 1][this.y_axis + 2].isOccupied) {
+                        cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 2]);
+                    }
                 }
             }
-
         case "Bishop":
             //
         case "Rook":
