@@ -65,47 +65,63 @@ public class Piece {
         case "Knight":
             if (this.x_axis > 8 && this.y_axis > 8) {
                 // level 4
-                if (this.y_axis >= 2 && this.x_axis >= 1) {
+                if (this.y_axis >= 3 && this.x_axis >= 1) { // x >> [1-6] ----- y >> [3-7]
                     // left
-                    if (!board[this.x_axis - 1][this.y_axis - 2].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 2]);
+                    if (this.y_axis <= 7) {
+                        if (!board[this.x_axis - 1][this.y_axis - 2].isOccupied) {
+                            cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 2]);
+                        }
                     }
                     // Right
-                    if (!board[this.x_axis + 1][this.y_axis - 2].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 2]);
+                    if (this.x_axis + 1 <= 7) {
+                        if (!board[this.x_axis + 1][this.y_axis - 2].isOccupied) {
+                            cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 2]);
+                        }
                     }
                 }
                 // Level 3
-                if (this.y_axis >= 1 && this.x_axis >= 2) {
+                if (this.y_axis >= 2 && this.x_axis >= 2) { // x >> [2-5] ----- y >> [2-7]
                     // Left
-                    if (!board[this.x_axis - 2][this.y_axis - 1].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis - 2][this.y_axis - 2]);
+                    if (this.y_axis <= 7) {
+                        if (!board[this.x_axis - 2][this.y_axis - 1].isOccupied) {
+                            cellsAllowed.add(board[this.x_axis - 2][this.y_axis - 2]);
+                        }
                     }
                     // Right
-                    if (!board[this.x_axis + 2][this.y_axis - 1].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis + 2][this.y_axis - 1]);
+                    if (this.x_axis + 2 <= 7) {
+                        if (!board[this.x_axis + 2][this.y_axis - 1].isOccupied) {
+                            cellsAllowed.add(board[this.x_axis + 2][this.y_axis - 1]);
+                        }
                     }
                 }
                 // Level 2
-                if (this.x_axis >= 1 && this.y_axis >= 1) {
+                if (this.x_axis >= 2 && this.y_axis >= 1) { // x >> [2-5] ----- y >> [1-6]
                     // Left
-                    if (!board[this.x_axis - 2][this.y_axis + 1].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis - 2][this.y_axis + 1]);
+                    if (this.y_axis + 1 <= 7) {
+                        if (!board[this.x_axis - 2][this.y_axis + 1].isOccupied) {
+                            cellsAllowed.add(board[this.x_axis - 2][this.y_axis + 1]);
+                        }
                     }
                     // Right
-                    if (!board[this.x_axis + 2][this.y_axis + 1].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis + 2][this.y_axis + 1]);
+                    if (this.x_axis + 2 <= 7) {
+                        if (!board[this.x_axis + 2][this.y_axis + 1].isOccupied) {
+                            cellsAllowed.add(board[this.x_axis + 2][this.y_axis + 1]);
+                        }
                     }
                 }
                 // Level 1
-                if (this.x_axis >= 2 && this.y_axis >= 1) {
+                if (this.x_axis >= 1 && this.y_axis >= 1) { // x >> [1-6] ----- y >> [1-5]
                     // Left
-                    if (!board[this.x_axis - 1][this.y_axis + 2].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 2]);
+                    if (this.y_axis + 2 <= 7) {
+                        if (!board[this.x_axis - 1][this.y_axis + 2].isOccupied) {
+                            cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 2]);
+                        }
                     }
                     // Right
-                    if (!board[this.x_axis + 1][this.y_axis + 2].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 2]);
+                    if (this.x_axis + 1 <= 7) {
+                        if (!board[this.x_axis + 1][this.y_axis + 2].isOccupied) {
+                            cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 2]);
+                        }
                     }
                 }
             }
