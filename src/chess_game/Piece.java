@@ -37,8 +37,7 @@ public class Piece {
                 break;
             if (this.y_axis < 6) {
                 // Classic move of a pawn
-                if (!board[this.x_axis][this.y_axis + 1].isOccupied
-                        && !board[this.x_axis][this.y_axis + 2].isOccupied) {
+                if (!board[this.x_axis][3].isOccupied && !board[this.x_axis][4].isOccupied) {
                     cellsAllowed.add(board[this.x_axis][this.y_axis + 1]);
                     cellsAllowed.add(board[this.x_axis][this.y_axis + 2]);
                 } else if (!board[this.x_axis][this.y_axis + 1].isOccupied) {
@@ -54,9 +53,10 @@ public class Piece {
             // Checking if the cells at right-left of a pawn is occupied - Eat move
             for (int i = 3; i > 0; i--) {
                 int b = i - 2;
-                if (b == 2) // The Cell ahead is Already checked above
+                // The Cell ahead is Already checked above
+                if (b == 2)
                     continue;
-                // If there is a material at either left or right up ahead you can go either
+                // Check for a material at either left or right up ahead. If so, go either
                 if (board[this.x_axis - b][this.y_axis + 1].isOccupied) {
                     cellsAllowed.add(board[this.x_axis - b][this.y_axis + 1]);
                 }
