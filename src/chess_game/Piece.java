@@ -76,18 +76,6 @@ public class Piece {
                     cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]);
                 }
             }
-
-            // for (int i = 3; i > 0; i--) {
-            // int b = i - 2;
-            // // The Cell ahead is Already checked above
-            // if (b == 2)
-            // continue;
-            // if (board[this.x_axis - 1][this.y_axis + 1].isOccupied
-            // && board[this.x_axis - b][this.y_axis + 1].takenBy.color != this.color) {
-            // cellsAllowed.add(board[this.x_axis - b][this.y_axis + 1]);
-            // }
-            // }
-
         case "Knight":
             if (this.x_axis > 8 && this.y_axis > 8) {
                 // level 4
@@ -216,7 +204,7 @@ public class Piece {
 
         case "Rook":
             //
-            if (this.x_axis < 8 && this.y_axis < 8) { // b = 8 - this.x_axis //for (int i = b; i <
+            if (this.x_axis < 8 && this.y_axis < 8) {
                 // Checking for any block in the column where Rook is located
                 for (int i = 0; i < 8; i++) {
                     if (!board[this.x_axis][this.y_axis + i].isOccupied) {
@@ -237,7 +225,9 @@ public class Piece {
                             && board[this.x_axis + i][this.y_axis].takenBy.color != this.color) {
                         cellsAllowed.add(board[this.x_axis + i][this.y_axis]);
                         break;
-                    } else // If a block found.. Cells allowed to move-at stops there
+                    } 
+                    // If a block found.. Cells allowed to move-at stops there
+                     else 
                         break;
                 }
             }
