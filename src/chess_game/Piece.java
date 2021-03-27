@@ -36,31 +36,57 @@ public class Piece {
             if (this.y_axis >= 7) // Precaution condition
                 break;
             if (this.y_axis < 6) {
-                // Classic move of a pawn
+                // Classic move of a pawn at the beginning of a game
                 if (!board[this.x_axis][3].isOccupied && !board[this.x_axis][4].isOccupied) {
                     cellsAllowed.add(board[this.x_axis][this.y_axis + 1]);
                     cellsAllowed.add(board[this.x_axis][this.y_axis + 2]);
-                } else if (!board[this.x_axis][this.y_axis + 1].isOccupied) {
-                    cellsAllowed.add(board[this.x_axis][this.y_axis + 1]);
                 }
 
-            } else {
+                // Classic move of a pawn at the mid game
+                else if (!board[this.x_axis][this.y_axis + 1].isOccupied) {
+                    cellsAllowed.add(board[this.x_axis][this.y_axis + 1]);
+                }
+            }
+            // When a pawn is about to be promoted
+            else {
                 if (!board[this.x_axis][this.y_axis + 1].isOccupied) {
                     cellsAllowed.add(board[this.x_axis][this.y_axis + 1]);
                 }
             }
 
             // Checking if the cells at right-left of a pawn is occupied - Eat move
-            for (int i = 3; i > 0; i--) {
-                int b = i - 2;
-                // The Cell ahead is Already checked above
-                if (b == 2)
-                    continue;
-                // Check for a material at either left or right up ahead. If so, go either
-                if (board[this.x_axis - b][this.y_axis + 1].isOccupied) {
-                    cellsAllowed.add(board[this.x_axis - b][this.y_axis + 1]);
+            if (!(this.x_axis == 0 || this.x_axis == 7)) {
+                if (board[this.x_axis - 1][this.y_axis + 1].isOccupied
+                        && board[this.x_axis - 1][this.y_axis + 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]);
+                }
+
+                if (board[this.x_axis + 1][this.y_axis + 1].isOccupied
+                        && board[this.x_axis + 1][this.y_axis + 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 1]);
+                }
+            } else if (this.x_axis == 0) {
+                if (board[this.x_axis + 1][this.y_axis + 1].isOccupied
+                        && board[this.x_axis + 1][this.y_axis + 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 1]);
+                }
+            } else if (this.x_axis == 7) {
+                if (board[this.x_axis - 1][this.y_axis + 1].isOccupied
+                        && board[this.x_axis - 1][this.y_axis + 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]);
                 }
             }
+
+            // for (int i = 3; i > 0; i--) {
+            // int b = i - 2;
+            // // The Cell ahead is Already checked above
+            // if (b == 2)
+            // continue;
+            // if (board[this.x_axis - 1][this.y_axis + 1].isOccupied
+            // && board[this.x_axis - b][this.y_axis + 1].takenBy.color != this.color) {
+            // cellsAllowed.add(board[this.x_axis - b][this.y_axis + 1]);
+            // }
+            // }
 
         case "Knight":
             if (this.x_axis > 8 && this.y_axis > 8) {
@@ -68,13 +94,17 @@ public class Piece {
                 if (this.y_axis >= 2 && this.x_axis >= 1) { // x >> [1-6] ----- y >> [2-7]
                     // left
                     if (this.y_axis <= 7) {
-                        if (!board[this.x_axis - 1][this.y_axis - 2].isOccupied) {
+                        if (!board[this.x_axis - 1][this.y_axis - 2].isOccupied
+                                || (board[this.x_axis - 1][this.y_axis - 2].isOccupied
+                                        && board[this.x_axis - 1][this.y_axis - 2].color != this.color)) {
                             cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 2]);
                         }
                     }
                     // Right
                     if (this.x_axis <= 6) {
-                        if (!board[this.x_axis + 1][this.y_axis - 2].isOccupied) {
+                        if (!board[this.x_axis + 1][this.y_axis - 2].isOccupied
+                                || (board[this.x_axis + 1][this.y_axis - 2].isOccupied
+                                        && board[this.x_axis + 1][this.y_axis - 2].color != this.color)) {
                             cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 2]);
                         }
                     }
@@ -83,13 +113,17 @@ public class Piece {
                 if (this.y_axis >= 1 && this.x_axis >= 2) { // x >> [2-5] ----- y >> [1-7]
                     // Left
                     if (this.y_axis <= 7) {
-                        if (!board[this.x_axis - 2][this.y_axis - 1].isOccupied) {
+                        if (!board[this.x_axis - 2][this.y_axis - 1].isOccupied
+                                || (board[this.x_axis - 2][this.y_axis - 1].isOccupied
+                                        && board[this.x_axis - 2][this.y_axis - 1].color != this.color)) {
                             cellsAllowed.add(board[this.x_axis - 2][this.y_axis - 2]);
                         }
                     }
                     // Right
                     if (this.x_axis <= 5) {
-                        if (!board[this.x_axis + 2][this.y_axis - 1].isOccupied) {
+                        if (!board[this.x_axis + 2][this.y_axis - 1].isOccupied
+                                || (board[this.x_axis + 2][this.y_axis - 1].isOccupied
+                                        && board[this.x_axis + 2][this.y_axis - 1].color != this.color)) {
                             cellsAllowed.add(board[this.x_axis + 2][this.y_axis - 1]);
                         }
                     }
@@ -98,13 +132,17 @@ public class Piece {
                 if (this.x_axis >= 2 && this.y_axis >= 0) { // x >> [2-5] ----- y >> [0-6]
                     // Left
                     if (this.y_axis <= 6) {
-                        if (!board[this.x_axis - 2][this.y_axis + 1].isOccupied) {
+                        if (!board[this.x_axis - 2][this.y_axis + 1].isOccupied
+                                || (board[this.x_axis - 2][this.y_axis + 1].isOccupied
+                                        && board[this.x_axis - 2][this.y_axis + 1].color != this.color)) {
                             cellsAllowed.add(board[this.x_axis - 2][this.y_axis + 1]);
                         }
                     }
                     // Right
                     if (this.x_axis <= 5) {
-                        if (!board[this.x_axis + 2][this.y_axis + 1].isOccupied) {
+                        if (!board[this.x_axis + 2][this.y_axis + 1].isOccupied
+                                || (board[this.x_axis + 2][this.y_axis + 1].isOccupied
+                                        && board[this.x_axis + 2][this.y_axis + 1].color != this.color)) {
                             cellsAllowed.add(board[this.x_axis + 2][this.y_axis + 1]);
                         }
                     }
