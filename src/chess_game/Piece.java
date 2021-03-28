@@ -33,47 +33,46 @@ public class Piece {
     ArrayList calculateCells() {
         switch (this.name) {
         case "Pawn":
-            if (this.y_axis >= 7) // Precaution condition
+            if (this.y_axis > 7) // Precaution condition
                 break;
-            Cell cell_2 = board[this.x_axis][this.y_axis + 2];
-            Cell cell_1 = board[this.x_axis][this.y_axis + 1];
-            if (this.y_axis < 6) {
-                // Classic move of a pawn at the beginning of a game
-                if (!board[this.x_axis][2].isOccupied && !board[this.x_axis][3].isOccupied) {
-                    cellsAllowed.add(cell_1);
-                    cellsAllowed.add(cell_2);
-                }
-
+            boolean begin = true;
+            Cell classic_move_cell_1 = board[this.x_axis][2];
+            Cell classic_move_cell_2 = board[this.x_axis][3];
+            Cell cell_ahead = board[this.x_axis][this.y_axis + 1];
+            Cell two_cells_ahead = board[this.x_axis][this.y_axis + 2];
+            // Classic move of a pawn at the beginning of a game
+            if (!classic_move_cell_1.isOccupied && !classic_move_cell_2.isOccupied && begin) {
+                cellsAllowed.add(cell_ahead);
+                cellsAllowed.add(two_cells_ahead);
+                begin = false;
+            }
+            if (this.y_axis <= 6 && !cell_ahead.isOccupied) {
                 // Classic move of a pawn at the mid game
-                else if (cell_1.isOccupied) {
-                    cellsAllowed.add(cell_1);
-                }
+                cellsAllowed.add(cell_ahead);
             }
             // When a pawn is about to be promoted
             else {
-                if (!cell_1.isOccupied) {
-                    cellsAllowed.add(cell_1);
-                }
+                // pawn here is to be replaced by an another material
             }
 
             // Checking if the cells at right-left of a pawn is occupied - Eat move
-            Cell cell_3 = board[this.x_axis - 1][this.y_axis + 1];
-            Cell cell_4 = board[this.x_axis + 1][this.y_axis + 1];
+            Cell one_cell_up_left = board[this.x_axis - 1][this.y_axis + 1];
+            Cell one_cell_up_right = board[this.x_axis + 1][this.y_axis + 1];
             if (!(this.x_axis == 0 || this.x_axis == 7)) {
-                if (cell_3.isOccupied && cell_3.takenBy.color != this.color) {
-                    cellsAllowed.add(cell_3);
+                if (one_cell_up_left.isOccupied && one_cell_up_left.takenBy.color != this.color) {
+                    cellsAllowed.add(one_cell_up_left);
                 }
 
-                if (cell_4.isOccupied && cell_4.takenBy.color != this.color) {
-                    cellsAllowed.add(cell_4);
+                if (one_cell_up_right.isOccupied && one_cell_up_right.takenBy.color != this.color) {
+                    cellsAllowed.add(one_cell_up_right);
                 }
             } else if (this.x_axis == 0) {
-                if (cell_4.isOccupied && cell_4.takenBy.color != this.color) {
-                    cellsAllowed.add(cell_4);
+                if (one_cell_up_right.isOccupied && one_cell_up_right.takenBy.color != this.color) {
+                    cellsAllowed.add(one_cell_up_right);
                 }
             } else if (this.x_axis == 7) {
-                if (cell_3.isOccupied && cell_3.takenBy.color != this.color) {
-                    cellsAllowed.add(cell_3);
+                if (one_cell_up_left.isOccupied && one_cell_up_left.takenBy.color != this.color) {
+                    cellsAllowed.add(one_cell_up_left);
                 }
             }
         case "Knight":
@@ -157,47 +156,47 @@ public class Piece {
                 }
             }
         case "Bishop":
-            int up = 7 - this.y_axis;
-            int down = this.x_axis;
-            for (int k = 0; k < up; k++) {// up left tendon
-                if (!board[this.x_axis + (k + 1)][this.y_axis + (k + 1)].isOccupied) {
-                    cellsAllowed.add(board[this.x_axis + (k + 1)][this.y_axis + (k + 1)]);
-                } else if (board[this.x_axis + (k + 1)][this.y_axis + (k + 1)].isOccupied
-                        && board[this.x_axis + (k + 1)][this.y_axis + (k + 1)].takenBy.color != this.color) {
-                    cellsAllowed.add(board[this.x_axis + (k + 1)][this.y_axis + (k + 1)]);
+            int upLeft = 7 - this.y_axis;
+            int downRight = this.x_axis;
+            for (int k = 0; k < upLeft; k++) {// up left tendon
+                Cell cell_up_left = board[this.x_axis + (k + 1)][this.y_axis + (k + 1)];
+                if (!cell_up_left.isOccupied) {
+                    cellsAllowed.add(cell_up_left);
+                } else if (cell_up_left.isOccupied && cell_up_left.takenBy.color != this.color) {
+                    cellsAllowed.add(cell_up_left);
                     break;
                 } else
                     break;
             }
-            for (int k = 0; k < down; k++) {// down right tendon
-                if (!board[this.x_axis - (k + 1)][this.y_axis - (k + 1)].isOccupied) {
-                    cellsAllowed.add(board[this.x_axis - (k + 1)][this.y_axis - (k + 1)]);
-                } else if (board[this.x_axis - (k + 1)][this.y_axis - (k + 1)].isOccupied
-                        && board[this.x_axis - (k + 1)][this.y_axis - (k + 1)].takenBy.color != this.color) {
-                    cellsAllowed.add(board[this.x_axis - (k + 1)][this.y_axis - (k + 1)]);
+            for (int k = 0; k < downRight; k++) {// down right tendon
+                Cell cell_down_right = board[this.x_axis - (k + 1)][this.y_axis - (k + 1)];
+                if (!cell_down_right.isOccupied) {
+                    cellsAllowed.add(cell_down_right);
+                } else if (cell_down_right.isOccupied && cell_down_right.takenBy.color != this.color) {
+                    cellsAllowed.add(cell_down_right);
                     break;
                 } else
                     break;
             }
 
-            int up2 = this.y_axis - 1;
-            int down2 = this.x_axis - 1;
-            for (int k = 0; k < up2; k++) { // up right tendon
-                if (!board[this.x_axis - (k + 1)][this.y_axis + (k + 1)].isOccupied) {
-                    cellsAllowed.add(board[this.x_axis - (k + 1)][this.y_axis + (k + 1)]);
-                } else if (board[this.x_axis - (k + 1)][this.y_axis + (k + 1)].isOccupied
-                        && board[this.x_axis - (k + 1)][this.y_axis + (k + 1)].takenBy.color != this.color) {
-                    cellsAllowed.add(board[this.x_axis - (k + 1)][this.y_axis + (k + 1)]);
+            int upRight = this.y_axis - 1;
+            int downLeft = this.x_axis - 1;
+            for (int k = 0; k < upRight; k++) { // up right tendon
+                Cell cell_up_right = board[this.x_axis - (k + 1)][this.y_axis + (k + 1)];
+                if (!cell_up_right.isOccupied) {
+                    cellsAllowed.add(cell_up_right);
+                } else if (cell_up_right.isOccupied && cell_up_right.takenBy.color != this.color) {
+                    cellsAllowed.add(cell_up_right);
                     break;
                 } else
                     break;
             }
-            for (int k = 0; k < down2; k++) {// down left tendon
-                if (!board[this.x_axis + (k + 1)][this.y_axis - (k + 1)].isOccupied) {
-                    cellsAllowed.add(board[this.x_axis + (k + 1)][this.y_axis - (k + 1)]);
-                } else if (board[this.x_axis + (k + 1)][this.y_axis - (k + 1)].isOccupied
-                        && board[this.x_axis + (k + 1)][this.y_axis - (k + 1)].takenBy.color != this.color) {
-                    cellsAllowed.add(board[this.x_axis + (k + 1)][this.y_axis - (k + 1)]);
+            for (int k = 0; k < downLeft; k++) {// down left tendon
+                Cell cell_down_left = board[this.x_axis + (k + 1)][this.y_axis - (k + 1)];
+                if (!cell_down_left.isOccupied) {
+                    cellsAllowed.add(cell_down_left);
+                } else if (cell_down_left.isOccupied && cell_down_left.takenBy.color != this.color) {
+                    cellsAllowed.add(cell_down_left);
                     break;
                 } else
                     break;
@@ -208,23 +207,24 @@ public class Piece {
             if (this.x_axis < 8 && this.y_axis < 8) {
                 // Checking for any block in the column where Rook is located
                 for (int i = 0; i < 8; i++) {
-                    if (!board[this.x_axis][this.y_axis + i].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis][this.y_axis + i]);
-                    } else if (board[this.x_axis][this.y_axis + i].isOccupied
-                            && board[this.x_axis][this.y_axis + i].takenBy.color != this.color) {
-                        cellsAllowed.add(board[this.x_axis][this.y_axis + i]);
+                    Cell cell_column = board[this.x_axis][this.y_axis + i];
+                    if (!cell_column.isOccupied) {
+                        cellsAllowed.add(cell_column);
+                    } else if (cell_column.isOccupied && cell_column.takenBy.color != this.color) {
+                        cellsAllowed.add(cell_column);
                         break;
-                    } else
+                    }
+                    // If a block found.. Cells allowed to move-at stops there
+                    else
                         break;
                 }
                 // Checking for any block in the row where Rook is located
                 for (int i = 0; i < 8; i++) {
-                    if (!board[this.x_axis + i][this.y_axis].isOccupied) {
-                        cellsAllowed.add(board[this.x_axis + i][this.y_axis]);
-
-                    } else if (board[this.x_axis + i][this.y_axis].isOccupied
-                            && board[this.x_axis + i][this.y_axis].takenBy.color != this.color) {
-                        cellsAllowed.add(board[this.x_axis + i][this.y_axis]);
+                    Cell cell_row = board[this.x_axis + i][this.y_axis];
+                    if (!cell_row.isOccupied) {
+                        cellsAllowed.add(cell_row);
+                    } else if (cell_row.isOccupied && cell_row.takenBy.color != this.color) {
+                        cellsAllowed.add(cell_row);
                         break;
                     }
                     // If a block found.. Cells allowed to move-at stops there
@@ -234,6 +234,80 @@ public class Piece {
             }
         case "Queen":
             //
+            int upLeft_queen = 7 - this.y_axis;
+            int downRight_queen = this.x_axis;
+            for (int k = 0; k < upLeft_queen; k++) {// up left tendon
+                Cell cell_up_left_queen = board[this.x_axis + (k + 1)][this.y_axis + (k + 1)];
+                if (!cell_up_left_queen.isOccupied) {
+                    cellsAllowed.add(cell_up_left_queen);
+                } else if (cell_up_left_queen.isOccupied && cell_up_left_queen.takenBy.color != this.color) {
+                    cellsAllowed.add(cell_up_left_queen);
+                    break;
+                } else
+                    break;
+            }
+            for (int k = 0; k < downRight_queen; k++) {// down right tendon
+                Cell cell_down_right_queen = board[this.x_axis - (k + 1)][this.y_axis - (k + 1)];
+                if (!cell_down_right_queen.isOccupied) {
+                    cellsAllowed.add(cell_down_right_queen);
+                } else if (cell_down_right_queen.isOccupied && cell_down_right_queen.takenBy.color != this.color) {
+                    cellsAllowed.add(cell_down_right_queen);
+                    break;
+                } else
+                    break;
+            }
+
+            int upRight_queen = this.y_axis - 1;
+            int downLeft_queen = this.x_axis - 1;
+            for (int k = 0; k < upRight_queen; k++) { // up right tendon
+                Cell cell_up_right_queen = board[this.x_axis - (k + 1)][this.y_axis + (k + 1)];
+                if (!cell_up_right_queen.isOccupied) {
+                    cellsAllowed.add(cell_up_right_queen);
+                } else if (cell_up_right_queen.isOccupied && cell_up_right_queen.takenBy.color != this.color) {
+                    cellsAllowed.add(cell_up_right_queen);
+                    break;
+                } else
+                    break;
+            }
+            for (int k = 0; k < downLeft_queen; k++) {// down left tendon
+                Cell cell_down_left_queen = board[this.x_axis + (k + 1)][this.y_axis - (k + 1)];
+                if (!cell_down_left_queen.isOccupied) {
+                    cellsAllowed.add(cell_down_left_queen);
+                } else if (cell_down_left_queen.isOccupied && cell_down_left_queen.takenBy.color != this.color) {
+                    cellsAllowed.add(cell_down_left_queen);
+                    break;
+                } else
+                    break;
+            }
+
+            if (this.x_axis < 8 && this.y_axis < 8) {
+                // Checking for any block in the column where Rook is located
+                for (int i = 0; i < 8; i++) {
+                    Cell cell_column_queen = board[this.x_axis][this.y_axis + i];
+                    if (!cell_column_queen.isOccupied) {
+                        cellsAllowed.add(cell_column_queen);
+                    } else if (cell_column_queen.isOccupied && cell_column_queen.takenBy.color != this.color) {
+                        cellsAllowed.add(cell_column_queen);
+                        break;
+                    }
+                    // If a block found.. Cells allowed to move-at stops there
+                    else
+                        break;
+                }
+                // Checking for any block in the row where Rook is located
+                for (int i = 0; i < 8; i++) {
+                    Cell cell_row_queen = board[this.x_axis + i][this.y_axis];
+                    if (!cell_row_queen.isOccupied) {
+                        cellsAllowed.add(cell_row_queen);
+                    } else if (cell_row_queen.isOccupied && cell_row_queen.takenBy.color != this.color) {
+                        cellsAllowed.add(cell_row_queen);
+                        break;
+                    }
+                    // If a block found.. Cells allowed to move-at stops there
+                    else
+                        break;
+                }
+            }
         case "King":
             //
         }
