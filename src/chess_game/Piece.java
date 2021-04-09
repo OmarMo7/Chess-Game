@@ -310,35 +310,81 @@ public class Piece {
             }
         case "King":
             //
-            if (this.x_axis >= 1 && this.x_axis <= 6 && this.y_axis >= 1 && this.y_axis <= 6) {
-                cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 1]); // top right
-                cellsAllowed.add(board[this.x_axis + 1][this.y_axis]); // middle right
-                cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 1]);// down right
+            // if ((this.x_axis >= 1 && this.x_axis <= 6 && this.y_axis >= 1 && this.y_axis
+            // <= 6)) {
+            // if (board[this.x_axis + 1][this.y_axis + 1].takenBy.color != this.color) {
+            // cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 1]); // top right
+            // }
+            // if (board[this.x_axis + 1][this.y_axis].takenBy.color != this.color) {
+            // cellsAllowed.add(board[this.x_axis + 1][this.y_axis]); // middle right
+            // }
+            // if (board[this.x_axis + 1][this.y_axis - 1].takenBy.color != this.color) {
+            // cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 1]);// down right
+            // }
+            // if (board[this.x_axis - 1][this.y_axis + 1].takenBy.color != this.color) {
+            // cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]); // top left
+            // }
+            // if (board[this.x_axis - 1][this.y_axis].takenBy.color != this.color) {
+            // cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
+            // }
+            // if (board[this.x_axis - 1][this.y_axis - 1].takenBy.color != this.color) {
+            // cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 1]);// down left
+            // }
+            // if (board[this.x_axis][this.y_axis + 1].takenBy.color != this.color) {
+            // cellsAllowed.add(board[this.x_axis][this.y_axis + 1]); // top
+            // }
+            // if (board[this.x_axis][this.y_axis - 1].takenBy.color != this.color) {
+            // cellsAllowed.add(board[this.x_axis][this.y_axis - 1]); // down
+            // }
 
-                cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]); // top left
-                cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
-                cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 1]);// down left
+            // }
+            ////
 
-                cellsAllowed.add(board[this.x_axis][this.y_axis + 1]); // top
-                cellsAllowed.add(board[this.x_axis][this.y_axis - 1]); // down
+            if ((this.x_axis >= 1 && this.x_axis <= 6)) {
+
+                if (board[this.x_axis + 1][this.y_axis].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis + 1][this.y_axis]); // middle right
+                }
+                if (board[this.x_axis - 1][this.y_axis].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
+                }
 
             }
 
-            else if (this.x_axis >= 1 && this.x_axis <= 6) {
-                cellsAllowed.add(board[this.x_axis + 1][this.y_axis]); // middle right
-                cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
+            if ((this.y_axis >= 1 && this.y_axis <= 6)) {
 
+                if (board[this.x_axis][this.y_axis + 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis][this.y_axis + 1]); // top
+                }
+                if (board[this.x_axis][this.y_axis - 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis][this.y_axis - 1]); // down
+                }
             }
+            ////
 
-            else if (this.y_axis >= 1 && this.y_axis <= 6) {
-                cellsAllowed.add(board[this.x_axis][this.y_axis + 1]); // top
-                cellsAllowed.add(board[this.x_axis][this.y_axis - 1]); // down
+            if ((this.x_axis >= 1 && this.y_axis <= 6)) {
+
+                if (board[this.x_axis - 1][this.y_axis + 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]); // top left
+                }
             }
+            if ((this.x_axis >= 1 && this.y_axis >= 1)) {
 
-            else if (this.x_axis >= 1 && this.y_axis <= 6) {
-                cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]); // top left
-            } else if (this.x_axis <= 6 && this.y_axis >= 1) {
-                cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 1]);// down right
+                if (board[this.x_axis - 1][this.y_axis - 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 1]);// down left
+                }
+            }
+            if ((this.x_axis <= 6 && this.y_axis <= 6)) {
+
+                if (board[this.x_axis + 1][this.y_axis + 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 1]); // top right
+                }
+            }
+            if ((this.x_axis <= 6 && this.y_axis >= 1)) {
+
+                if (board[this.x_axis + 1][this.y_axis - 1].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 1]);// down right
+                }
             }
 
         }
