@@ -310,6 +310,37 @@ public class Piece {
             }
         case "King":
             //
+            if (this.x_axis >= 1 && this.x_axis <= 6 && this.y_axis >= 1 && this.y_axis <= 6) {
+                cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 1]); // top right
+                cellsAllowed.add(board[this.x_axis + 1][this.y_axis]); // middle right
+                cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 1]);// down right
+
+                cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]); // top left
+                cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
+                cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 1]);// down left
+
+                cellsAllowed.add(board[this.x_axis][this.y_axis + 1]); // top
+                cellsAllowed.add(board[this.x_axis][this.y_axis - 1]); // down
+
+            }
+
+            else if (this.x_axis >= 1 && this.x_axis <= 6) {
+                cellsAllowed.add(board[this.x_axis + 1][this.y_axis]); // middle right
+                cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
+
+            }
+
+            else if (this.y_axis >= 1 && this.y_axis <= 6) {
+                cellsAllowed.add(board[this.x_axis][this.y_axis + 1]); // top
+                cellsAllowed.add(board[this.x_axis][this.y_axis - 1]); // down
+            }
+
+            else if (this.x_axis >= 1 && this.y_axis <= 6) {
+                cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]); // top left
+            } else if (this.x_axis <= 6 && this.y_axis >= 1) {
+                cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 1]);// down right
+            }
+
         }
         return cellsAllowed;
     }
