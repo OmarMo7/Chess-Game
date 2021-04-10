@@ -17,6 +17,9 @@ public class Board {
     public static ArrayList<Piece> piecesOfPlayer2 = new ArrayList();
     public static Cell[][] board = new Cell[8][8];
 
+    public static String cellLettersNumbers[] = { "a", "b", "c", "d", "e", "f", "g", "h", "1", "2", "3", "4", "5", "6",
+            "7", "8" };
+
     void setPlayersMaterial(ArrayList<Piece> piecesOfPlayer1, ArrayList<Piece> piecesOfPlayer) {
 
     }
@@ -77,9 +80,9 @@ public class Board {
                     board[i][j].takenBy = piece;
                     board[i][j].isOccupied = true;
                     if (material_color == "white") {
-                        piecesOfPlayer1.add(piece); //White pieces
+                        piecesOfPlayer1.add(piece); // White pieces
                     } else {
-                        piecesOfPlayer2.add(piece); //Black pieces
+                        piecesOfPlayer2.add(piece); // Black pieces
                     }
 
                 } else {
