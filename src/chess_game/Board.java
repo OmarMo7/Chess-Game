@@ -17,6 +17,10 @@ public class Board {
     public static ArrayList<Piece> piecesOfPlayer2 = new ArrayList();
     public static Cell[][] board = new Cell[8][8];
 
+    void setPlayersMaterial(ArrayList<Piece> piecesOfPlayer1, ArrayList<Piece> piecesOfPlayer) {
+
+    }
+
     // Mehtod setPosition to be made
     void construct(Board b) {
         char letter = ' ';
@@ -68,10 +72,15 @@ public class Board {
                 } else if (i == 4 && j == 7) {
                     material_name = "King"; // Both kings are positioned at such cells
                 }
-                if (material_name != "" && material_color != "") {
+                if (material_name != "") {
                     Piece piece = new Piece(material_name, material_color, i, j);
                     board[i][j].takenBy = piece;
                     board[i][j].isOccupied = true;
+                    if (material_color == "white") {
+                        piecesOfPlayer1.add(piece); //White pieces
+                    } else {
+                        piecesOfPlayer2.add(piece); //Black pieces
+                    }
 
                 } else {
                     board[i][j].takenBy = null;
