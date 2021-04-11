@@ -11,14 +11,15 @@ package chess_game;
  * @author Omar Mostafa
  */
 public class Cell {
-    
-    String name;
-    boolean isOccupied;
-    int x_axis, y_axis;
-    String color;
+
+    String name = "";
+    boolean isOccupied = false;
+    int x_axis = 0, y_axis = 0;
+    String color = "";
     Piece takenBy;
+
     // to set properties as private
-    public Cell(String name, int x_axis, int y_axis){
+    public Cell(String name, int x_axis, int y_axis) {
         this.x_axis = x_axis;
         this.y_axis = y_axis;
         this.name = name;
@@ -27,7 +28,7 @@ public class Cell {
     void setColor(String color) {
         this.color = color;
     }
-    
+
     String getColor() {
         return this.color;
     }

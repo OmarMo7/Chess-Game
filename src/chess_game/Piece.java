@@ -14,10 +14,10 @@ import java.util.ArrayList;
  */
 public class Piece {
 
-    String name;
-    String color;
+    String name = " ";
+    String color = " ";
 
-    int x_axis, y_axis;
+    int x_axis = 0, y_axis = 0;
     boolean isThreatened = false;
     boolean isEaten = false;
 
@@ -28,7 +28,7 @@ public class Piece {
         this.y_axis = y_axis;
     }
 
-    ArrayList<Cell> cellsAllowed = new ArrayList();
+    public ArrayList<Cell> cellsAllowed = new ArrayList();
 
     ArrayList calculateCells() {
         switch (this.name) {
@@ -391,14 +391,14 @@ public class Piece {
         return cellsAllowed;
     }
 
-    void move(int x_axisAmount, int y_axisAmount) {
+    void setPosition(int x_axisAmount, int y_axisAmount) {
         this.x_axis += x_axisAmount;
         this.y_axis += y_axisAmount;
     }
 
-    void take(int x_axisAmount, int y_axisAmount, Piece toBeTaken) {
-        this.x_axis += x_axisAmount;
-        this.y_axis += y_axisAmount;
-        toBeTaken.isEaten = true;
-    }
+    // void take(int x_axisAmount, int y_axisAmount, Piece toBeTaken) {
+    //     this.x_axis += x_axisAmount;
+    //     this.y_axis += y_axisAmount;
+    //     toBeTaken.isEaten = true;
+    // }
 }
