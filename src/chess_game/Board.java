@@ -16,7 +16,7 @@ public class Board {
     public static ArrayList<Piece> piecesOfPlayer1 = new ArrayList();
     public static ArrayList<Piece> piecesOfPlayer2 = new ArrayList();
     public static Cell[][] board = new Cell[8][8];
-    public static String cellLettersNumbers[] = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "1", "2", "3",
+    public static String cellLettersNumbers[] = new String[] { "h", "g", "f", "e", "d", "c", "b", "a", "1", "2", "3",
             "4", "5", "6", "7", "8" };
 
     void setPlayersMaterial(ArrayList<Piece> piecesOfPlayer1, ArrayList<Piece> piecesOfPlayer) {
@@ -63,13 +63,13 @@ public class Board {
                     material_name = "Pawn";
                     // System.out.println("Pawn" + i + " " + j + " " + material_color);
                 } else if (i == 3 && (j == 7 || j == 0)) {
-                    material_name = "Queen";
-                    // System.out.println("Queen" + i + " " + j + " " + material_color);
-                    // Both queens are positioned at such cells
-                } else if (i == 4 && (j == 7 || j == 0)) {
                     material_name = "King";
-                    // System.out.println("King" + i + " " + j + " " + material_color);
+                    // System.out.println("Queen" + i + " " + j + " " + material_color);
                     // Both kings are positioned at such cells
+                } else if (i == 4 && (j == 7 || j == 0)) {
+                    material_name = "Queen";
+                    // System.out.println("King" + i + " " + j + " " + material_color);
+                    // Both queens are positioned at such cells
                 } else {
                     material_name = "";
                 }
@@ -86,7 +86,7 @@ public class Board {
                 } else {
                     board[i][j].isOccupied = false;
                 }
-                
+
             }
 
         }
