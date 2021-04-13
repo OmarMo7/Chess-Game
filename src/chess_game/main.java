@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package chess_game;
+
 /**
  *
  * @author Omar Mostafa
@@ -15,6 +16,8 @@ public class main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Game game = new Game();
+        game.start();
     }
-    
+
 }
