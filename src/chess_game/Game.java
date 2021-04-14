@@ -80,36 +80,56 @@ public class Game {
 
     public void displayBoard() {
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (board[j][i].isOccupied) {
-                    if (board[j][i].takenBy.name == "Pawn") {
-                        if (j == 7) {
-                            System.out.print("   " + "Pawn" + " ");
-                        } else
-                            System.out.print("  " + "Pawn" + " ");
-                    } else
-                        System.out.print(" " + board[j][i].takenBy.name + " ");
-                } else {
-                    System.out.print("------|");
-                }
-                if (j == 7)
-                    System.out.print("\n");
-            }
-        }
+        // for (int i = 0; i < 8; i++) {
+        // for (int j = 0; j < 8; j++) {
+        // if (board[j][i].isOccupied) {
+        // if (board[j][i].takenBy.name == "Pawn") {
+        // if (j == 7) {
+        // System.out.print(" " + "Pawn" + " " + board[j][i].name);
+        // } else
+        // System.out.print(" " + "Pawn" + " " + board[j][i].name);
+        // } else
+        // System.out.print(" " + board[j][i].takenBy.name + " " + board[j][i].name);
+        // } else {
+        // System.out.print("------|");
+        // }
+        // if (j == 7)
+        // System.out.print("\n");
+        // }
+        // }
+
+        // White perspective
+        // for (int i = 7; i >= 0; i--) {
+        // for (int j = 7; j >= 0; j--) {
+        // if (board[j][i].isOccupied) {
+        // if (board[j][i].takenBy.name == "Pawn") {
+        // if (j == 0) {
+        // System.out.print(" " + "Pawn" + " ");
+        // } else
+        // System.out.print(" " + "Pawn" + " ");
+        // } else
+        // System.out.print(" " + board[j][i].takenBy.name + " ");
+        // } else {
+        // System.out.print("------|");
+        // }
+        // if (j == 0)
+        // System.out.print("\n");
+        // }
+        // }
+
         // Black perspective
         // for (int i = 0; i < 8; i++) {
         // for (int j = 0; j < 8; j++) {
         // if (board[j][i].isOccupied) {
         // if (board[j][i].takenBy.name == "Pawn") {
         // if (j == 3 || j == 7) {
-        // System.out.print(board[j][i].name + " " + board[j][i].takenBy.name);
+        // System.out.print(" " + "Pawn" + " ");
         // } else
-        // System.out.print(board[j][i].name + " " + board[j][i].takenBy.name);
+        // System.out.print(" " + "Pawn" + " ");
         // } else
-        // System.out.print(board[j][i].name + " " + board[j][i].takenBy.name);
+        // System.out.print(" " + board[j][i].takenBy.name + " ");
         // } else {
-        // System.out.print(board[j][i].name + " ");
+        // System.out.print("------|");
         // }
         // if (j == 7)
         // System.out.print("\n");
