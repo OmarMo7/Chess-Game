@@ -81,23 +81,23 @@ public class Game {
     public void displayBoard() {
 
         // White perspective
-        // for (int i = 7; i >= 0; i--) {
-        // for (int j = 7; j >= 0; j--) {
-        // if (board[j][i].isOccupied) {
-        // if (board[j][i].takenBy.name == "Pawn") {
-        // if (j == 0) {
-        // System.out.print(" " + "Pawn" + " ");
-        // } else
-        // System.out.print(" " + "Pawn" + " ");
-        // } else
-        // System.out.print(" " + board[j][i].takenBy.name + " ");
-        // } else {
-        // System.out.print("------|");
-        // }
-        // if (j == 0)
-        // System.out.print("\n");
-        // }
-        // }
+        for (int i = 7; i >= 0; i--) {
+            for (int j = 7; j >= 0; j--) {
+                if (board[j][i].isOccupied) {
+                    if (board[j][i].takenBy.name == "Pawn") {
+                        if (j == 0 || j == 4) {
+                            System.out.print("   " + "Pawn");
+                        } else
+                            System.out.print("  " + "Pawn" + " ");
+                    } else
+                        System.out.print(" " + board[j][i].takenBy.name + " ");
+                } else {
+                    System.out.print("------|");
+                }
+                if (j == 0)
+                    System.out.print("\n");
+            }
+        }
 
         // Black perspective
         // for (int i = 0; i < 8; i++) {
