@@ -110,7 +110,7 @@ public class Piece {
             break;
         case "Knight":
 
-            if (this.x_axis > 8 && this.y_axis > 8) {
+            if (this.x_axis < 8 && this.y_axis < 8) {
                 // level 4
                 if (this.y_axis >= 2 && this.x_axis >= 1) { // x >> [1-6] ----- y >> [2-7]
                     // left
@@ -160,7 +160,7 @@ public class Piece {
                         }
                     }
                     // Right
-                    if (this.x_axis <= 5) {
+                    if (this.x_axis <= 5 && this.y_axis + 1 <= 7) {
                         Cell cell_lvl_2_right = board[this.x_axis + 2][this.y_axis + 1];
                         if (!cell_lvl_2_right.isOccupied
                                 || (cell_lvl_2_right.isOccupied && cell_lvl_2_right.color != this.color)) {
@@ -179,7 +179,7 @@ public class Piece {
                         }
                     }
                     // Right
-                    if (this.x_axis <= 6) {
+                    if (this.x_axis <= 6 && this.y_axis + 2 <= 7) {
                         Cell cell_lvl_1_right = board[this.x_axis + 1][this.y_axis + 2];
                         if (!cell_lvl_1_right.isOccupied
                                 || (cell_lvl_1_right.isOccupied && cell_lvl_1_right.takenBy.color != this.color)) {
@@ -192,8 +192,9 @@ public class Piece {
         case "Bishop":
             int upLeft = 7 - this.y_axis;
             int downRight = this.x_axis;
-            for (int i = 0; i < upLeft; i++) {// up left tendon
-                Cell cell_up_left = board[this.x_axis + (i + 1)][this.y_axis + (i + 1)];
+            int b = 1;
+            while (this.x_axis + b <= 7 && this.y_axis + b <= 7) {
+                Cell cell_up_left = board[this.x_axis + b][this.y_axis + b];
                 if (!cell_up_left.isOccupied) {
                     cellsAllowed.add(cell_up_left);
                 } else if (cell_up_left.isOccupied && cell_up_left.takenBy.color != this.color) {
@@ -201,9 +202,10 @@ public class Piece {
                     break;
                 } else
                     break;
+                b++;
             }
-            for (int i = 0; i < downRight; i++) {// down right tendon
-                Cell cell_down_right = board[this.x_axis - (i + 1)][this.y_axis - (i + 1)];
+            while (this.x_axis - b >= 0 && this.y_axis - b >= 0) {
+                Cell cell_down_right = board[this.x_axis - b][this.y_axis - b];
                 if (!cell_down_right.isOccupied) {
                     cellsAllowed.add(cell_down_right);
                 } else if (cell_down_right.isOccupied && cell_down_right.takenBy.color != this.color) {
@@ -211,12 +213,11 @@ public class Piece {
                     break;
                 } else
                     break;
+                b++;
             }
 
-            int upRight = this.y_axis - 1;
-            int downLeft = this.x_axis - 1;
-            for (int i = 0; i < upRight; i++) { // up right tendon
-                Cell cell_up_right = board[this.x_axis - (i + 1)][this.y_axis + (i + 1)];
+            while (this.x_axis - b >= 0 && this.y_axis + b <= 7) {
+                Cell cell_up_right = board[this.x_axis - b][this.y_axis + b];
                 if (!cell_up_right.isOccupied) {
                     cellsAllowed.add(cell_up_right);
                 } else if (cell_up_right.isOccupied && cell_up_right.takenBy.color != this.color) {
@@ -224,9 +225,11 @@ public class Piece {
                     break;
                 } else
                     break;
+                b++;
             }
-            for (int i = 0; i < downLeft; i++) {// down left tendon
-                Cell cell_down_left = board[this.x_axis + (i + 1)][this.y_axis - (i + 1)];
+
+            while (this.x_axis + b <= 7 && this.y_axis - b >= 0) {
+                Cell cell_down_left = board[this.x_axis + b][this.y_axis - b];
                 if (!cell_down_left.isOccupied) {
                     cellsAllowed.add(cell_down_left);
                 } else if (cell_down_left.isOccupied && cell_down_left.takenBy.color != this.color) {
@@ -234,7 +237,9 @@ public class Piece {
                     break;
                 } else
                     break;
+                b++;
             }
+
             break;
         case "Rook":
             //
