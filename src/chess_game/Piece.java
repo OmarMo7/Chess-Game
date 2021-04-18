@@ -438,43 +438,15 @@ public class Piece {
             }
             break;
         case "King":
-            //
-            // if ((this.x_axis >= 1 && this.x_axis <= 6 && this.y_axis >= 1 && this.y_axis
-            // <= 6)) {
-            // if (board[this.x_axis + 1][this.y_axis + 1].takenBy.color != this.color) {
-            // cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 1]); // top right
-            // }
-            // if (board[this.x_axis + 1][this.y_axis].takenBy.color != this.color) {
-            // cellsAllowed.add(board[this.x_axis + 1][this.y_axis]); // middle right
-            // }
-            // if (board[this.x_axis + 1][this.y_axis - 1].takenBy.color != this.color) {
-            // cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 1]);// down right
-            // }
-            // if (board[this.x_axis - 1][this.y_axis + 1].takenBy.color != this.color) {
-            // cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]); // top left
-            // }
-            // if (board[this.x_axis - 1][this.y_axis].takenBy.color != this.color) {
-            // cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
-            // }
-            // if (board[this.x_axis - 1][this.y_axis - 1].takenBy.color != this.color) {
-            // cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 1]);// down left
-            // }
-            // if (board[this.x_axis][this.y_axis + 1].takenBy.color != this.color) {
-            // cellsAllowed.add(board[this.x_axis][this.y_axis + 1]); // top
-            // }
-            // if (board[this.x_axis][this.y_axis - 1].takenBy.color != this.color) {
-            // cellsAllowed.add(board[this.x_axis][this.y_axis - 1]); // down
-            // }
-
-            // }
-            ////
 
             if ((this.x_axis >= 1 && this.x_axis <= 6)) {
 
-                if (board[this.x_axis + 1][this.y_axis].takenBy.color != this.color) {
+                if (board[this.x_axis + 1][this.y_axis].takenBy.color != this.color
+                        || !(board[this.x_axis + 1][this.y_axis].isOccupied)) {
                     cellsAllowed.add(board[this.x_axis + 1][this.y_axis]); // middle right
                 }
-                if (board[this.x_axis - 1][this.y_axis].takenBy.color != this.color) {
+                if (board[this.x_axis - 1][this.y_axis].takenBy.color != this.color
+                        || !(board[this.x_axis - 1][this.y_axis].isOccupied)) {
                     cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
                 }
 
@@ -482,10 +454,12 @@ public class Piece {
 
             if ((this.y_axis >= 1 && this.y_axis <= 6)) {
 
-                if (board[this.x_axis][this.y_axis + 1].takenBy.color != this.color) {
+                if (board[this.x_axis][this.y_axis + 1].takenBy.color != this.color
+                        || !(board[this.x_axis][this.y_axis + 1].isOccupied)) {
                     cellsAllowed.add(board[this.x_axis][this.y_axis + 1]); // top
                 }
-                if (board[this.x_axis][this.y_axis - 1].takenBy.color != this.color) {
+                if (board[this.x_axis][this.y_axis - 1].takenBy.color != this.color
+                        || !(board[this.x_axis][this.y_axis - 1].isOccupied)) {
                     cellsAllowed.add(board[this.x_axis][this.y_axis - 1]); // down
                 }
             }
@@ -493,25 +467,29 @@ public class Piece {
 
             if ((this.x_axis >= 1 && this.y_axis <= 6)) {
 
-                if (board[this.x_axis - 1][this.y_axis + 1].takenBy.color != this.color) {
+                if (board[this.x_axis - 1][this.y_axis + 1].takenBy.color != this.color
+                        || !(board[this.x_axis - 1][this.y_axis + 1].isOccupied)) {
                     cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]); // top left
                 }
             }
             if ((this.x_axis >= 1 && this.y_axis >= 1)) {
 
-                if (board[this.x_axis - 1][this.y_axis - 1].takenBy.color != this.color) {
+                if (board[this.x_axis - 1][this.y_axis - 1].takenBy.color != this.color
+                        || !(board[this.x_axis - 1][this.y_axis - 1].isOccupied)) {
                     cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 1]);// down left
                 }
             }
             if ((this.x_axis <= 6 && this.y_axis <= 6)) {
 
-                if (board[this.x_axis + 1][this.y_axis + 1].takenBy.color != this.color) {
+                if (board[this.x_axis + 1][this.y_axis + 1].takenBy.color != this.color
+                        || !(board[this.x_axis + 1][this.y_axis + 1].isOccupied)) {
                     cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 1]); // top right
                 }
             }
             if ((this.x_axis <= 6 && this.y_axis >= 1)) {
 
-                if (board[this.x_axis + 1][this.y_axis - 1].takenBy.color != this.color) {
+                if (board[this.x_axis + 1][this.y_axis - 1].takenBy.color != this.color
+                        || !(board[this.x_axis + 1][this.y_axis - 1].isOccupied)) {
                     cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 1]);// down right
                 }
             }
