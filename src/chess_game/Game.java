@@ -2,6 +2,7 @@ package chess_game;
 
 import java.util.Scanner;
 import static chess_game.Board.board;
+import static chess_game.Board.piecesOfPlayer1;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,7 +27,26 @@ public class Game {
     public void start() {
         Board b = new Board();
         b.construct(b);
-        displayBoard();
+        System.out.println("Hello, please choose an option!");
+        System.out.println("1- dsiplay board");
+        System.out.println("2- move");
+        System.out.println("3- see cells allowed");
+        Scanner input = new Scanner(System.in);
+        int x = 3;
+        switch (x) {
+        case 1:
+            displayBoard();
+            break;
+        case 2:
+            // move();
+            break;
+        case 3:
+            b.lookup();
+            break;
+        default:
+            break;
+        }
+
         // TODO: display options
     }
 
