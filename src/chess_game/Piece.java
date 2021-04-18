@@ -240,7 +240,7 @@ public class Piece {
             break;
         case "Rook":
             //
-            int r = 0;
+            int r = 1;
             while (this.y_axis + r < 8) {
                 Cell cell_column = board[this.x_axis][this.y_axis + r];
                 if (!cell_column.isOccupied) {
@@ -254,7 +254,7 @@ public class Piece {
                     break;
                 r++;
             }
-            r = 0;
+            r = 1;
             while (this.y_axis - r >= 0) {
                 Cell cell_column = board[this.x_axis][this.y_axis - r];
                 if (!cell_column.isOccupied) {
@@ -268,7 +268,7 @@ public class Piece {
                     break;
                 r++;
             }
-            r = 0;
+            r = 1;
             while (this.x_axis + r < 8) {
                 Cell cell_row = board[this.x_axis + r][this.y_axis];
                 if (!cell_row.isOccupied) {
@@ -282,7 +282,7 @@ public class Piece {
                     break;
                 r++;
             }
-            r = 0;
+            r = 1;
             while (this.x_axis - r >= 0) {
                 Cell cell_row = board[this.x_axis + r][this.y_axis];
                 if (!cell_row.isOccupied) {
