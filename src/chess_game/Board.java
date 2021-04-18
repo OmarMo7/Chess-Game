@@ -77,18 +77,31 @@ public class Board {
                     Piece piece = new Piece(material_name, material_color, i, j);
                     board[i][j].takenBy = piece;
                     board[i][j].isOccupied = true;
-                    if (material_color == "white") {
+                    System.out.println("i= " + i + " j= " + j);
+                    if (material_color == "White") {
                         piecesOfPlayer1.add(piece); // White pieces
                     } else {
                         piecesOfPlayer2.add(piece); // Black pieces
                     }
 
                 } else {
+                    Piece piece = new Piece("", "", i, j);
+                    board[i][j].takenBy = null;
                     board[i][j].isOccupied = false;
                 }
 
             }
 
+        }
+    }
+
+    void lookup() {
+        for (int k = 0; k < board.length; k++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[k][j].isOccupied) {
+                    board[k][j].takenBy.calculateCells();
+                }
+            }
         }
     }
 }
