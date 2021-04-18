@@ -296,36 +296,6 @@ public class Piece {
                     break;
                 r++;
             }
-
-            // if (this.x_axis < 8 && this.y_axis < 8) {
-            // // Checking for any block in the column where Rook is located
-            // for (int i = 1; i < 8; i++) {
-            // Cell cell_column = board[this.x_axis][this.y_axis + i];
-            // if (!cell_column.isOccupied) {
-            // cellsAllowed.add(cell_column);
-            // } else if (cell_column.isOccupied && cell_column.takenBy.color != this.color)
-            // {
-            // cellsAllowed.add(cell_column);
-            // break;
-            // }
-            // // If a block found.. Cells allowed to move-at stops there
-            // else
-            // break;
-            // }
-            // // Checking for any block in the row where Rook is located
-            // for (int i = 1; i < 8; i++) {
-            // Cell cell_row = board[this.x_axis + i][this.y_axis];
-            // if (!cell_row.isOccupied) {
-            // cellsAllowed.add(cell_row);
-            // } else if (cell_row.isOccupied && cell_row.takenBy.color != this.color) {
-            // cellsAllowed.add(cell_row);
-            // break;
-            // }
-            // // If a block found.. Cells allowed to move-at stops there
-            // else
-            // break;
-            // }
-            // }
             break;
         case "Queen":
             //
