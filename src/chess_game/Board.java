@@ -33,7 +33,6 @@ public class Board {
             for (int j = 0; j < 8; j++) {
                 board[i][j] = new Cell(" ", 0, 0);
                 board[i][j].name = cellLettersNumbers[i] + cellLettersNumbers[j + 8];
-                // System.out.println(board[i][j].name);
 
                 // Even cells are black
                 // Odd cells are white
@@ -54,21 +53,16 @@ public class Board {
 
                 } else if ((j == 0 || j == 7) && (i == 1 || i == 6)) { // Knights are positioned at such cells
                     material_name = "Knight";
-                    // System.out.println("Knight" + i + " " + j + " " + material_color);
 
                 } else if ((j == 0 || j == 7) && (i == 2 || i == 5)) { // Bishops are positioned at such cells
                     material_name = "Bishop";
-                    // System.out.println("Bishop" + i + " " + j + " " + material_color);
                 } else if (j == 1 || j == 6) { // 2nd and 7th row of the board are initially filled with pawns
                     material_name = "Pawn";
-                    // System.out.println("Pawn" + i + " " + j + " " + material_color);
                 } else if (i == 3 && (j == 7 || j == 0)) {
                     material_name = "King";
-                    // System.out.println("Queen" + i + " " + j + " " + material_color);
                     // Both kings are positioned at such cells
                 } else if (i == 4 && (j == 7 || j == 0)) {
                     material_name = "Queen";
-                    // System.out.println("King" + i + " " + j + " " + material_color);
                     // Both queens are positioned at such cells
                 } else {
                     material_name = "";
@@ -77,7 +71,6 @@ public class Board {
                     Piece piece = new Piece(material_name, material_color, i, j);
                     board[i][j].takenBy = piece;
                     board[i][j].isOccupied = true;
-                    System.out.println("i= " + i + " j= " + j);
                     if (material_color == "White") {
                         piecesOfPlayer1.add(piece); // White pieces
                     } else {
