@@ -109,7 +109,6 @@ public class Piece {
             }
             break;
         case "Knight":
-
             if (this.x_axis < 8 && this.y_axis < 8) {
                 // level 4
                 if (this.y_axis >= 2 && this.x_axis >= 1) { // x >> [1-6] ----- y >> [2-7]
@@ -190,8 +189,6 @@ public class Piece {
             }
             break;
         case "Bishop":
-            int upLeft = 7 - this.y_axis;
-            int downRight = this.x_axis;
             int b = 1;
             while (this.x_axis + b <= 7 && this.y_axis + b <= 7) {
                 Cell cell_up_left = board[this.x_axis + b][this.y_axis + b];
