@@ -284,7 +284,7 @@ public class Piece {
             }
             r = 1;
             while (this.x_axis - r >= 0) {
-                Cell cell_row = board[this.x_axis + r][this.y_axis];
+                Cell cell_row = board[this.x_axis - r][this.y_axis];
                 if (!cell_row.isOccupied) {
                     cellsAllowed.add(cell_row);
                 } else if (cell_row.isOccupied && cell_row.takenBy.color != this.color) {
