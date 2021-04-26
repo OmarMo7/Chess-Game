@@ -31,7 +31,7 @@ public class Piece {
     }
 
     public ArrayList<Cell> cellsAllowed = new ArrayList();
-    
+
     ArrayList calculateCells() {
         this.cellsAllowed.clear();
         switch (this.type) {
@@ -133,7 +133,7 @@ public class Piece {
                     }
                 }
                 // Level 3
-                if (this.y_axis >= 1 && this.y_axis <= 7 ) { // x >> [2-5] ----- y >> [1-7]
+                if (this.y_axis >= 1 && this.y_axis <= 7) { // x >> [2-5] ----- y >> [1-7]
                     // Left
                     if (this.x_axis >= 2) {
                         Cell cell_lvl_3_left = board[this.x_axis - 2][this.y_axis - 1];
@@ -162,7 +162,7 @@ public class Piece {
                         }
                     }
                     // Right
-                    if (this.x_axis <= 5 ) {
+                    if (this.x_axis <= 5) {
                         Cell cell_lvl_2_right = board[this.x_axis + 2][this.y_axis + 1];
                         if (!cell_lvl_2_right.isOccupied
                                 || (cell_lvl_2_right.isOccupied && cell_lvl_2_right.takenBy.color != this.color)) {
@@ -204,7 +204,7 @@ public class Piece {
                     break;
                 b++;
             }
-            b=1;
+            b = 1;
             while (this.x_axis - b >= 0 && this.y_axis - b >= 0) {
                 Cell cell_down_right = board[this.x_axis - b][this.y_axis - b];
                 if (!cell_down_right.isOccupied) {
@@ -216,7 +216,7 @@ public class Piece {
                     break;
                 b++;
             }
-            b=1;
+            b = 1;
             while (this.x_axis - b >= 0 && this.y_axis + b <= 7) {
                 Cell cell_up_right = board[this.x_axis - b][this.y_axis + b];
                 if (!cell_up_right.isOccupied) {
@@ -228,7 +228,7 @@ public class Piece {
                     break;
                 b++;
             }
-            b=1;
+            b = 1;
             while (this.x_axis + b <= 7 && this.y_axis - b >= 0) {
                 Cell cell_down_left = board[this.x_axis + b][this.y_axis - b];
                 if (!cell_down_left.isOccupied) {
@@ -410,25 +410,31 @@ public class Piece {
             break;
         case "King":
 
-            if ((this.x_axis >= 1 && this.x_axis <= 6)) {
+            if (this.x_axis <= 6) {
 
-                if (!(board[this.x_axis + 1][this.y_axis].isOccupied) || board[this.x_axis + 1][this.y_axis].takenBy.color != this.color) {
+                if (!(board[this.x_axis + 1][this.y_axis].isOccupied)
+                        || board[this.x_axis + 1][this.y_axis].takenBy.color != this.color) {
                     cellsAllowed.add(board[this.x_axis + 1][this.y_axis]); // middle right
-                }
-                if (!(board[this.x_axis - 1][this.y_axis].isOccupied) || board[this.x_axis - 1][this.y_axis].takenBy.color != this.color) {
-                    cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
                 }
 
             }
+            if (this.x_axis >= 1) {
+                if (!(board[this.x_axis - 1][this.y_axis].isOccupied)
+                        || board[this.x_axis - 1][this.y_axis].takenBy.color != this.color) {
+                    cellsAllowed.add(board[this.x_axis - 1][this.y_axis]); // middle left
+                }
+            }
 
-            if ((this.y_axis >= 1 && this.y_axis <= 6)) {
+            if ((this.y_axis <= 6)) {
 
-                if (board[this.x_axis][this.y_axis + 1].takenBy.color != this.color
-                        || !(board[this.x_axis][this.y_axis + 1].isOccupied)) {
+                if (!(board[this.x_axis][this.y_axis + 1].isOccupied)
+                        || board[this.x_axis][this.y_axis + 1].takenBy.color != this.color) {
                     cellsAllowed.add(board[this.x_axis][this.y_axis + 1]); // top
                 }
-                if (board[this.x_axis][this.y_axis - 1].takenBy.color != this.color
-                        || !(board[this.x_axis][this.y_axis - 1].isOccupied)) {
+            }
+            if (this.y_axis >= 1) {
+                if (!(board[this.x_axis][this.y_axis - 1].isOccupied)
+                        || board[this.x_axis][this.y_axis - 1].takenBy.color != this.color) {
                     cellsAllowed.add(board[this.x_axis][this.y_axis - 1]); // down
                 }
             }
@@ -436,29 +442,29 @@ public class Piece {
 
             if ((this.x_axis >= 1 && this.y_axis <= 6)) {
 
-                if (board[this.x_axis - 1][this.y_axis + 1].takenBy.color != this.color
-                        || !(board[this.x_axis - 1][this.y_axis + 1].isOccupied)) {
+                if (!(board[this.x_axis - 1][this.y_axis + 1].isOccupied)
+                        || board[this.x_axis - 1][this.y_axis + 1].takenBy.color != this.color) {
                     cellsAllowed.add(board[this.x_axis - 1][this.y_axis + 1]); // top left
                 }
             }
             if ((this.x_axis >= 1 && this.y_axis >= 1)) {
 
-                if (board[this.x_axis - 1][this.y_axis - 1].takenBy.color != this.color
-                        || !(board[this.x_axis - 1][this.y_axis - 1].isOccupied)) {
+                if (!(board[this.x_axis - 1][this.y_axis - 1].isOccupied)
+                        || board[this.x_axis - 1][this.y_axis - 1].takenBy.color != this.color) {
                     cellsAllowed.add(board[this.x_axis - 1][this.y_axis - 1]);// down left
                 }
             }
             if ((this.x_axis <= 6 && this.y_axis <= 6)) {
 
-                if (board[this.x_axis + 1][this.y_axis + 1].takenBy.color != this.color
-                        || !(board[this.x_axis + 1][this.y_axis + 1].isOccupied)) {
+                if (!(board[this.x_axis + 1][this.y_axis + 1].isOccupied)
+                        || board[this.x_axis + 1][this.y_axis + 1].takenBy.color != this.color) {
                     cellsAllowed.add(board[this.x_axis + 1][this.y_axis + 1]); // top right
                 }
             }
             if ((this.x_axis <= 6 && this.y_axis >= 1)) {
 
-                if (board[this.x_axis + 1][this.y_axis - 1].takenBy.color != this.color
-                        || !(board[this.x_axis + 1][this.y_axis - 1].isOccupied)) {
+                if (!(board[this.x_axis + 1][this.y_axis - 1].isOccupied)
+                        || board[this.x_axis + 1][this.y_axis - 1].takenBy.color != this.color) {
                     cellsAllowed.add(board[this.x_axis + 1][this.y_axis - 1]);// down right
                 }
             }
