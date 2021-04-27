@@ -315,6 +315,7 @@ public class Piece {
                     break;
                 q++;
             }
+            q = 1;
             while (this.x_axis - q >= 0 && this.y_axis - q >= 0) {
                 Cell cell_down_right = board[this.x_axis - q][this.y_axis - q];
                 if (!cell_down_right.isOccupied) {
@@ -326,7 +327,7 @@ public class Piece {
                     break;
                 q++;
             }
-
+            q = 1;
             while (this.x_axis - q >= 0 && this.y_axis + q <= 7) {
                 Cell cell_up_right = board[this.x_axis - q][this.y_axis + q];
                 if (!cell_up_right.isOccupied) {
@@ -338,7 +339,7 @@ public class Piece {
                     break;
                 q++;
             }
-
+            q = 1;
             while (this.x_axis + q <= 7 && this.y_axis - q >= 0) {
                 Cell cell_down_left = board[this.x_axis + q][this.y_axis - q];
                 if (!cell_down_left.isOccupied) {
