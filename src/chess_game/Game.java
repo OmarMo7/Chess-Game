@@ -3,6 +3,7 @@ package chess_game;
 import java.util.Scanner;
 import static chess_game.Board.board;
 import static chess_game.Board.piecesOfPlayer1;
+import static chess_game.Board.cellLettersNumbers;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,8 +18,6 @@ import static chess_game.Board.piecesOfPlayer1;
 public class Game {
     // public ArrayList <Piece> piecesOfPlayer1 = new ArrayList();
     // public static ArrayList <Piece> piecesOfPlayer2 = new ArrayList();
-    public static String cellLettersNumbers[] = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "1", "2", "3",
-            "4", "5", "6", "7", "8" };
 
     public Game() {
 
@@ -27,24 +26,35 @@ public class Game {
     public void start() {
         Board b = new Board();
         b.construct(b);
-        System.out.println("Hello, please choose an option!");
-        System.out.println("1- dsiplay board");
-        System.out.println("2- move");
-        System.out.println("3- see cells allowed");
-        Scanner input = new Scanner(System.in);
-        int x = 3;
-        switch (x) {
-        case 1:
-            displayBoard();
-            break;
-        case 2:
-            // move();
-            break;
-        case 3:
+        while (true) {
             b.lookup();
-            break;
-        default:
-            break;
+            System.out.println("Hello, please choose an option!");
+            System.out.println("1- dsiplay board");
+            System.out.println("2- move");
+            System.out.println("3- see cells allowed");
+            Scanner input = new Scanner(System.in);
+            Scanner input2 = new Scanner(System.in);
+            int x = input.nextInt();
+            switch (x) {
+            case 1:
+                displayBoard();
+                break;
+            case 2:
+                move();
+                displayBoard();
+                break;
+            case 3:
+                System.out.println("Enter the cell: ");
+                String xx = input2.next();
+                for (int i = 0; i < board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++){
+                    System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "+
+                        board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
+                }
+                System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.name);
+                break;
+            default:
+                break;
+            }
         }
 
         // TODO: display options
@@ -53,46 +63,72 @@ public class Game {
     // TODO: optimization to be performed - to check both first and second
     // letter together instead of checking each one at once
 
-    public void move(Piece pieceToBeMoved, int x_axis, int y_axis) {
+    public void move() {
         String x = new String();
-        String y = new String();
+        int pawnCell = 0;
+        int indexOfX = 0;
+        String name = new String();
+        Piece pieceToBeMoved = new Piece("", "", "", 0, 0);
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the cell name as x * y");
-        boolean existX = false;
+        boolean existPiece = false;
         do {
-            System.out.println("Enter x");
+            System.out.println("Enter the piece name");
+            name = input.next();
+            if (name.length() == 1) {
+                for (int i = 0; i < cellLettersNumbers.length; i++) {
+                    if (cellLettersNumbers[i].equals(name)) {
+                        pawnCell = i;
+                        break;
+                    }
+                }
+            }
+            for (int i = 0; i < piecesOfPlayer1.size(); i++) {
+                if (piecesOfPlayer1.get(i).name.equals(name)) {
+                    existPiece = true;
+                    pieceToBeMoved = piecesOfPlayer1.get(i);
+                    break;
+                } else if (i == piecesOfPlayer1.size() - 1) {
+                    existPiece = false;
+                    break;
+                }
+            }
+        } while (!existPiece);
+        boolean existX = false;
+        boolean existY = false;
+        System.out.println("Enter where do you want to move your piece as x * y");
+        do {
             x = input.next();
             for (int i = 0; i < cellLettersNumbers.length; i++) {
-                if (x.length() > 1)// Another message to be displayed here
+                if (x.length() > 2)// Another message to be displayed here
                     break;
-                if (cellLettersNumbers[i] == x) {
+                if (cellLettersNumbers[i].equals(x.substring(0, 1))) {
                     existX = true;
+                    indexOfX = i;
+                    i += (8 - i); // To jump over the rest of letters
+                } else if (cellLettersNumbers[i].equals(x.substring(1, 2))) {
+                    existY = true;
                     break;
-                } else if (i == cellLettersNumbers.length - 1) {
+
+                }
+                if (i == cellLettersNumbers.length - 1) {
                     existX = false;
                     System.out.println("Not in-board cell");
                 }
             }
-        } while (!existX);
-        boolean existY = false;
-        do {
-            System.out.println("Enter y");
-            y = input.next();
-            for (int i = 0; i < cellLettersNumbers.length; i++) {
-                if (y.length() > 1)// Another message to be displayed here
-                    break;
-                if (cellLettersNumbers[i] == y) {
-                    existY = true;
-                    break;
-                } else if (i == cellLettersNumbers.length - 1) {
-                    existY = false;
-                    System.out.println("Not in-board cell");
-                }
-            }
-        } while (!existY);
-        input.close();
-        if (pieceToBeMoved.cellsAllowed.contains(board[Integer.parseInt(x)][Integer.parseInt(y)])) {
-            pieceToBeMoved.setPosition(Integer.parseInt(x), Integer.parseInt(y));
+        } while (!existX || !existY);
+
+        if (pieceToBeMoved.cellsAllowed.contains(
+                board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
+                        - 1])) {
+            board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
+            board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
+            pieceToBeMoved.setPosition(Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1,
+                    Integer.parseInt(x.substring(1, 2)) - 1);
+            board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
+                    - 1].isOccupied = true;
+            board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
+                    - 1].takenBy = pieceToBeMoved;
+
         } else {
             System.out.println("Not available cell for such a piece!");
         }
@@ -104,13 +140,16 @@ public class Game {
         for (int i = 7; i >= 0; i--) {
             for (int j = 7; j >= 0; j--) {
                 if (board[j][i].isOccupied) {
-                    if (board[j][i].takenBy.name == "Pawn") {
-                        if (j == 0 || j == 4) {
-                            System.out.print("   " + "Pawn");
-                        } else
-                            System.out.print("  " + "Pawn" + " ");
-                    } else
-                        System.out.print(" " + board[j][i].takenBy.name + " ");
+
+                    if (board[j][i].takenBy.name == cellLettersNumbers[j]) {
+                        System.out.print("   " + cellLettersNumbers[j] + "  |");
+                    } else if (j == 7 || j == 3 || j == 0) {
+                        System.out.print("" + board[j][i].takenBy.name + "  |");
+                    } else if (j == 6 || j == 5 || j == 1 || j == 2) {
+                        System.out.print("" + board[j][i].takenBy.name + "|");
+                    } else {
+                        System.out.print("" + board[j][i].takenBy.name + " |");
+                    }
                 } else {
                     System.out.print("------|");
                 }
