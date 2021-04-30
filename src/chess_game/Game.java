@@ -47,14 +47,15 @@ public class Game {
                 // System.out.println("Enter the cell: ");
                 // String xx = input2.next();
                 // for (int i = 0; i < board[Integer.parseInt(xx.substring(0, 1))][Integer
-                //         .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++) {
-                //     System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer
-                //             .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "
-                //             + board[Integer.parseInt(xx.substring(0, 1))][Integer
-                //                     .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
+                // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++) {
+                // System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer
+                // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "
+                // + board[Integer.parseInt(xx.substring(0, 1))][Integer
+                // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
                 // }
                 // System.out.println(
-                //         board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.name);
+                // board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1,
+                // 2))].takenBy.name);
                 // break;
             default:
                 break;
@@ -73,6 +74,7 @@ public class Game {
         int indexOfX = 0;
         String name = new String();
         Piece pieceToBeMoved = new Piece("", "", "", 0, 0);
+        Piece pieceToBeMoved2 = new Piece("", "", "", 0, 0);
         Scanner input = new Scanner(System.in);
         boolean existPiece = false;
         do {
@@ -88,6 +90,11 @@ public class Game {
             }
             for (int i = 0; i < piecesOfPlayer1.size(); i++) {
                 if (piecesOfPlayer1.get(i).name.equals(name)) {
+                    for (int k = i + 1; k < piecesOfPlayer1.size(); k++) {
+                        if (piecesOfPlayer1.get(k).name.equals(name)) {
+                            pieceToBeMoved2 = piecesOfPlayer1.get(k);
+                        }
+                    }
                     existPiece = true;
                     pieceToBeMoved = piecesOfPlayer1.get(i);
                     break;
@@ -120,8 +127,13 @@ public class Game {
                 }
             }
         } while (!existX || !existY);
-
         if (pieceToBeMoved.cellsAllowed.contains(
+                board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2)) - 1])
+                && pieceToBeMoved2.cellsAllowed.contains(board[Integer.parseInt(cellLettersNumbers[indexOfX + 8])
+                        - 1][Integer.parseInt(x.substring(1, 2)) - 1])) {
+            System.out.println("Common cell!!");
+            System.out.println("Please, specify which piece to move");
+        } else if (pieceToBeMoved.cellsAllowed.contains(
                 board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
                         - 1])) {
             board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
