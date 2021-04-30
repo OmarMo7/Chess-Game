@@ -44,18 +44,18 @@ public class Game {
                 displayBoard();
                 break;
             case 3:
-                System.out.println("Enter the cell: ");
-                String xx = input2.next();
-                for (int i = 0; i < board[Integer.parseInt(xx.substring(0, 1))][Integer
-                        .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++) {
-                    System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer
-                            .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "
-                            + board[Integer.parseInt(xx.substring(0, 1))][Integer
-                                    .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
-                }
-                System.out.println(
-                        board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.name);
-                break;
+                // System.out.println("Enter the cell: ");
+                // String xx = input2.next();
+                // for (int i = 0; i < board[Integer.parseInt(xx.substring(0, 1))][Integer
+                //         .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++) {
+                //     System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer
+                //             .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "
+                //             + board[Integer.parseInt(xx.substring(0, 1))][Integer
+                //                     .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
+                // }
+                // System.out.println(
+                //         board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.name);
+                // break;
             default:
                 break;
             }
