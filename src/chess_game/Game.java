@@ -46,11 +46,15 @@ public class Game {
             case 3:
                 System.out.println("Enter the cell: ");
                 String xx = input2.next();
-                for (int i = 0; i < board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++){
-                    System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "+
-                        board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
+                for (int i = 0; i < board[Integer.parseInt(xx.substring(0, 1))][Integer
+                        .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++) {
+                    System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer
+                            .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "
+                            + board[Integer.parseInt(xx.substring(0, 1))][Integer
+                                    .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
                 }
-                System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.name);
+                System.out.println(
+                        board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1, 2))].takenBy.name);
                 break;
             default:
                 break;
@@ -137,45 +141,43 @@ public class Game {
     public void displayBoard() {
 
         // White perspective
+        System.out.println("White To Move...");
         for (int i = 7; i >= 0; i--) {
             for (int j = 7; j >= 0; j--) {
+                if (j == 7)
+                    System.out.print("|");
                 if (board[j][i].isOccupied) {
-
                     if (board[j][i].takenBy.name == cellLettersNumbers[j]) {
-                        System.out.print("   " + cellLettersNumbers[j] + "  |");
-                    } else if (j == 7 || j == 3 || j == 0) {
-                        System.out.print("" + board[j][i].takenBy.name + "  |");
-                    } else if (j == 6 || j == 5 || j == 1 || j == 2) {
-                        System.out.print("" + board[j][i].takenBy.name + "|");
+                        System.out.print("  " + cellLettersNumbers[j] + "  |");
                     } else {
-                        System.out.print("" + board[j][i].takenBy.name + " |");
+                        System.out.print("  " + board[j][i].takenBy.name + "  |");
                     }
                 } else {
-                    System.out.print("------|");
+                    System.out.print("-----|");
                 }
                 if (j == 0)
                     System.out.print("\n");
             }
         }
-
+        System.out.print("\n");
         // Black perspective
-        // for (int i = 0; i < 8; i++) {
-        // for (int j = 0; j < 8; j++) {
-        // if (board[j][i].isOccupied) {
-        // if (board[j][i].takenBy.name == "Pawn") {
-        // if (j == 3 || j == 7) {
-        // System.out.print(" " + "Pawn" + " ");
-        // } else
-        // System.out.print(" " + "Pawn" + " ");
-        // } else
-        // System.out.print(" " + board[j][i].takenBy.name + " ");
-        // } else {
-        // System.out.print("------|");
-        // }
-        // if (j == 7)
-        // System.out.print("\n");
-        // }
-        // }
+        System.out.println("Black To Move...");
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (j == 0)
+                    System.out.print("|");
+                if (board[j][i].isOccupied) {
+                    if (board[j][i].takenBy.name == cellLettersNumbers[j]) {
+                        System.out.print("  " + cellLettersNumbers[j] + "  |");
+                    } else {
+                        System.out.print("  " + board[j][i].takenBy.name + "  |");
+                    }
+                } else {
+                    System.out.print("-----|");
+                }
+                if (j == 7)
+                    System.out.print("\n");
+            }
+        }
     }
-
 }
