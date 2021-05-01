@@ -36,29 +36,29 @@ public class Game {
             Scanner input2 = new Scanner(System.in);
             int x = input.nextInt();
             switch (x) {
-            case 1:
-                displayBoard();
-                break;
-            case 2:
-                move();
-                displayBoard();
-                break;
-            case 3:
-                // System.out.println("Enter the cell: ");
-                // String xx = input2.next();
-                // for (int i = 0; i < board[Integer.parseInt(xx.substring(0, 1))][Integer
-                // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++) {
-                // System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer
-                // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "
-                // + board[Integer.parseInt(xx.substring(0, 1))][Integer
-                // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
-                // }
-                // System.out.println(
-                // board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1,
-                // 2))].takenBy.name);
-                // break;
-            default:
-                break;
+                case 1:
+                    displayBoard();
+                    break;
+                case 2:
+                    move();
+                    displayBoard();
+                    break;
+                case 3:
+                    // System.out.println("Enter the cell: ");
+                    // String xx = input2.next();
+                    // for (int i = 0; i < board[Integer.parseInt(xx.substring(0, 1))][Integer
+                    // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++) {
+                    // System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer
+                    // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "
+                    // + board[Integer.parseInt(xx.substring(0, 1))][Integer
+                    // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
+                    // }
+                    // System.out.println(
+                    // board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1,
+                    // 2))].takenBy.name);
+                    // break;
+                default:
+                    break;
             }
         }
 
@@ -159,11 +159,7 @@ public class Game {
                 if (j == 7)
                     System.out.print("|");
                 if (board[j][i].isOccupied) {
-                    if (board[j][i].takenBy.name == cellLettersNumbers[j]) {
-                        System.out.print("  " + cellLettersNumbers[j] + "  |");
-                    } else {
-                        System.out.print("  " + board[j][i].takenBy.name + "  |");
-                    }
+                    System.out.print("  " + board[j][i].takenBy.name + "  |");
                 } else {
                     System.out.print("-----|");
                 }
@@ -179,11 +175,7 @@ public class Game {
                 if (j == 0)
                     System.out.print("|");
                 if (board[j][i].isOccupied) {
-                    if (board[j][i].takenBy.name == cellLettersNumbers[j]) {
-                        System.out.print("  " + cellLettersNumbers[j] + "  |");
-                    } else {
-                        System.out.print("  " + board[j][i].takenBy.name + "  |");
-                    }
+                    System.out.print("  " + board[j][i].takenBy.name + "  |");
                 } else {
                     System.out.print("-----|");
                 }
