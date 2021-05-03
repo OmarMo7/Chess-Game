@@ -88,6 +88,24 @@ public class Game {
                     }
                 }
             }
+
+            switch (name.length()) {
+                case 3:
+                    pieceToBeMoved = detectPiece(name, false, false); // e.g. NF3
+                    break;
+                case 4:
+                    if (name.contains("x")) {
+                        pieceToBeMoved = detectPiece(name, false, true); // e.g. NxF3
+                    } else {
+                        pieceToBeMoved = detectPiece(name, true, false); // e.g. NbF3 or e.g. N1F3
+                    }
+                    break;
+                case 5:
+                    pieceToBeMoved = detectPiece(name, true, true); // e.g. NbxF3 or e.g. N1xF3
+                    break;
+                default:
+                    break;
+            }
             for (int i = 0; i < piecesOfPlayer1.size(); i++) {
                 if (piecesOfPlayer1.get(i).name.equals(name)) {
                     for (int k = i + 1; k < piecesOfPlayer1.size(); k++) {
@@ -181,7 +199,124 @@ public class Game {
                 }
                 if (j == 7)
                     System.out.print("\n");
+
             }
         }
+    }
+
+    Piece detectPiece(String notation, boolean common, boolean takes) {
+        // Test case 1 >>> Nf3
+        // Test case 2 >>> N1f3
+        // Test case 3 >>> N1xf3
+        // TODO: PieceToBeMoved is to be added as a fourth param
+        int file = enumerate(notation.charAt(notation.length() - 2)) - 1; // f --> 1 as index
+        int rank = enumerate(notation.charAt(notation.length() - 1)) - 1; // 3 --> 2 as index
+        Piece pieceToBeMoved = null;
+        switch (notation.charAt(0)) {
+            case 'R':
+                pieceToBeMoved = check('R', notation, common, file, rank, pieceToBeMoved);
+                break;
+            case 'N':
+                pieceToBeMoved = check('N', notation, common, file, rank, pieceToBeMoved);
+                break;
+            default:
+                break;
+        }
+
+        return pieceToBeMoved;
+    }
+
+    int enumerate(char c) {
+        int rank = 0;
+        switch (c) {
+            case 'a':
+            case '1':
+                rank = 1;
+                break;
+            case 'b':
+            case '2':
+                rank = 2;
+                break;
+            case 'c':
+            case '3':
+                rank = 3;
+                break;
+            case 'd':
+            case '4':
+                rank = 4;
+                break;
+            case 'e':
+            case '5':
+                rank = 5;
+                break;
+            case 'f':
+            case '6':
+                rank = 6;
+                break;
+            case 'g':
+            case '7':
+                rank = 7;
+                break;
+            case 'h':
+            case '8':
+                rank = 8;
+                break;
+
+            default:
+                break;
+        }
+        return rank;
+    }
+
+    Piece check(char material_name, String notation, boolean common, int file, int rank, Piece pieceToBeMoved) {
+        boolean p1_contains_cell = false;
+        boolean p2_contains_cell = false;
+        int first_material_index = 0;
+        int second_material_index = 0;
+        if (material_name == 'R') {
+            p1_contains_cell = piecesOfPlayer1.get(0).cellsAllowed.contains(board[file][rank]);
+            p2_contains_cell = piecesOfPlayer1.get(15).cellsAllowed.contains(board[file][rank]);
+            first_material_index = 0;
+            second_material_index = 15;
+        } else if (material_name == 'N') {
+            p1_contains_cell = piecesOfPlayer1.get(2).cellsAllowed.contains(board[file][rank]);
+            p2_contains_cell = piecesOfPlayer1.get(13).cellsAllowed.contains(board[file][rank]);
+            first_material_index = 2;
+            second_material_index = 13;
+        }
+        if (common) {
+
+            if (p1_contains_cell && p2_contains_cell) {
+                // System.out.println("Please, specify piece");
+                // System.out.println("ERROR!.. Invalid Notation");
+                int difference = enumerate(notation.charAt(notation.length() - 3)) - 1;
+                if (piecesOfPlayer1.get(first_material_index).x_axis == piecesOfPlayer1
+                        .get(second_material_index).x_axis) {
+                    pieceToBeMoved = board[piecesOfPlayer1.get(first_material_index).x_axis][difference].takenBy;
+                } else if (piecesOfPlayer1.get(first_material_index).y_axis == piecesOfPlayer1
+                        .get(second_material_index).y_axis) {
+                    pieceToBeMoved = board[difference][piecesOfPlayer1.get(first_material_index).y_axis].takenBy;
+                }
+            } else if (p1_contains_cell && !p2_contains_cell) {
+                pieceToBeMoved = piecesOfPlayer1.get(first_material_index);
+            } else if (!p1_contains_cell && p2_contains_cell) {
+                pieceToBeMoved = piecesOfPlayer1.get(second_material_index);
+            }
+
+        } else {
+            p1_contains_cell = piecesOfPlayer1.get(first_material_index).cellsAllowed.contains(board[file][rank]);
+            p2_contains_cell = piecesOfPlayer1.get(second_material_index).cellsAllowed.contains(board[file][rank]);
+            if (p1_contains_cell && !p2_contains_cell) {
+                pieceToBeMoved = piecesOfPlayer1.get(first_material_index);
+            } else if (!p1_contains_cell && p2_contains_cell) {
+                pieceToBeMoved = piecesOfPlayer1.get(second_material_index);
+            }
+        }
+        board[piecesOfPlayer1.get(first_material_index).x_axis][piecesOfPlayer1
+                .get(first_material_index).y_axis].takenBy = null;
+        board[piecesOfPlayer1.get(first_material_index).x_axis][piecesOfPlayer1
+                .get(first_material_index).y_axis].isOccupied = false;
+
+        return pieceToBeMoved;
     }
 }
