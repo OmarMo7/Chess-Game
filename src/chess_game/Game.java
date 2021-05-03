@@ -88,6 +88,7 @@ public class Game {
                     }
                 }
             }
+            
 
             switch (name.length()) {
                 case 3:
@@ -106,6 +107,7 @@ public class Game {
                 default:
                     break;
             }
+        } while(!existPiece);
         //     for (int i = 0; i < piecesOfPlayer1.size(); i++) {
         //         if (piecesOfPlayer1.get(i).name.equals(name)) {
         //             for (int k = i + 1; k < piecesOfPlayer1.size(); k++) {
@@ -166,8 +168,8 @@ public class Game {
         // } else {
         //     System.out.println("Not available cell for such a piece!");
         // }
+    
     }
-
     public void displayBoard() {
 
         // White perspective
