@@ -27,6 +27,7 @@ public class Board {
     public void construct(Board b) {
         String letter = "";
         String material_name = "";
+        String material_type = "";
         String material_color = "";
         for (int i = 0; i < 8; i++) {
             // Distribute letters over rows' numbers
@@ -49,36 +50,42 @@ public class Board {
                 }
 
                 if (((j == 0 || j == 7) && (i == 0 || i == 7))) { // Rooks are positioned at such cells
-                    material_name = "Rook";
+                    material_name = "R";
+                    material_type = "Rook";
 
                 } else if ((j == 0 || j == 7) && (i == 1 || i == 6)) { // Knights are positioned at such cells
-                    material_name = "Knight";
+                    material_name = "N";
+                    material_type = "Knight";
 
                 } else if ((j == 0 || j == 7) && (i == 2 || i == 5)) { // Bishops are positioned at such cells
-                    material_name = "Bishop";
+                    material_name = "B";
+                    material_type = "Bishop";
                 } else if (j == 1 || j == 6) { // 2nd and 7th row of the board are initially filled with pawns
-                    material_name = "Pawn";
+                    material_name = cellLettersNumbers[i];
+                    material_type = "Pawn";
                 } else if (i == 3 && (j == 7 || j == 0)) {
-                    material_name = "King";
+                    material_name = "K";
+                    material_type = "King";
                     // Both kings are positioned at such cells
                 } else if (i == 4 && (j == 7 || j == 0)) {
-                    material_name = "Queen";
+                    material_name = "Q";
+                    material_type = "Queen";
                     // Both queens are positioned at such cells
                 } else {
                     material_name = "";
+                    material_type = "";
                 }
                 if (material_name != "") {
-                    Piece piece = new Piece(material_name, material_color, i, j);
+                    Piece piece = new Piece(material_name, material_type, material_color, i, j);
                     board[i][j].takenBy = piece;
                     board[i][j].isOccupied = true;
-                    if (material_color == "White") {
-                        piecesOfPlayer1.add(piece); // White pieces
+                    if (board[i][j].takenBy.color == "White") {
+                        piecesOfPlayer1.add(board[i][j].takenBy); // White pieces
                     } else {
-                        piecesOfPlayer2.add(piece); // Black pieces
+                        piecesOfPlayer2.add(board[i][j].takenBy); // Black pieces
                     }
-
                 } else {
-                    Piece piece = new Piece("", "", i, j);
+                    // Piece piece = new Piece("", "", i, j);
                     board[i][j].takenBy = null;
                     board[i][j].isOccupied = false;
                 }
@@ -89,10 +96,10 @@ public class Board {
     }
 
     void lookup() {
-        for (int k = 0; k < board.length; k++) {
-            for (int j = 0; j < board.length; j++) {
-                if (board[k][j].isOccupied) {
-                    board[k][j].takenBy.calculateCells();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board[i][j].isOccupied) {
+                    board[i][j].takenBy.calculateCells();
                 }
             }
         }
