@@ -106,66 +106,66 @@ public class Game {
                 default:
                     break;
             }
-            for (int i = 0; i < piecesOfPlayer1.size(); i++) {
-                if (piecesOfPlayer1.get(i).name.equals(name)) {
-                    for (int k = i + 1; k < piecesOfPlayer1.size(); k++) {
-                        if (piecesOfPlayer1.get(k).name.equals(name)) {
-                            pieceToBeMoved2 = piecesOfPlayer1.get(k);
-                        }
-                    }
-                    existPiece = true;
-                    pieceToBeMoved = piecesOfPlayer1.get(i);
-                    break;
-                } else if (i == piecesOfPlayer1.size() - 1) {
-                    existPiece = false;
-                    break;
-                }
-            }
-        } while (!existPiece);
-        boolean existX = false;
-        boolean existY = false;
-        System.out.println("Enter where do you want to move your piece as x * y");
-        do {
-            x = input.next();
-            for (int i = 0; i < cellLettersNumbers.length; i++) {
-                if (x.length() > 2)// Another message to be displayed here
-                    break;
-                if (cellLettersNumbers[i].equals(x.substring(0, 1))) {
-                    existX = true;
-                    indexOfX = i;
-                    i += (8 - i); // To jump over the rest of letters
-                } else if (cellLettersNumbers[i].equals(x.substring(1, 2))) {
-                    existY = true;
-                    break;
+        //     for (int i = 0; i < piecesOfPlayer1.size(); i++) {
+        //         if (piecesOfPlayer1.get(i).name.equals(name)) {
+        //             for (int k = i + 1; k < piecesOfPlayer1.size(); k++) {
+        //                 if (piecesOfPlayer1.get(k).name.equals(name)) {
+        //                     pieceToBeMoved2 = piecesOfPlayer1.get(k);
+        //                 }
+        //             }
+        //             existPiece = true;
+        //             pieceToBeMoved = piecesOfPlayer1.get(i);
+        //             break;
+        //         } else if (i == piecesOfPlayer1.size() - 1) {
+        //             existPiece = false;
+        //             break;
+        //         }
+        //     }
+        // } while (!existPiece);
+        // boolean existX = false;
+        // boolean existY = false;
+        // System.out.println("Enter where do you want to move your piece as x * y");
+        // do {
+        //     x = input.next();
+        //     for (int i = 0; i < cellLettersNumbers.length; i++) {
+        //         if (x.length() > 2)// Another message to be displayed here
+        //             break;
+        //         if (cellLettersNumbers[i].equals(x.substring(0, 1))) {
+        //             existX = true;
+        //             indexOfX = i;
+        //             i += (8 - i); // To jump over the rest of letters
+        //         } else if (cellLettersNumbers[i].equals(x.substring(1, 2))) {
+        //             existY = true;
+        //             break;
 
-                }
-                if (i == cellLettersNumbers.length - 1) {
-                    existX = false;
-                    System.out.println("Not in-board cell");
-                }
-            }
-        } while (!existX || !existY);
-        if (pieceToBeMoved.cellsAllowed.contains(
-                board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2)) - 1])
-                && pieceToBeMoved2.cellsAllowed.contains(board[Integer.parseInt(cellLettersNumbers[indexOfX + 8])
-                        - 1][Integer.parseInt(x.substring(1, 2)) - 1])) {
-            System.out.println("Common cell!!");
-            System.out.println("Please, specify which piece to move");
-        } else if (pieceToBeMoved.cellsAllowed.contains(
-                board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
-                        - 1])) {
-            board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
-            board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
-            pieceToBeMoved.setPosition(Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1,
-                    Integer.parseInt(x.substring(1, 2)) - 1);
-            board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
-                    - 1].isOccupied = true;
-            board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
-                    - 1].takenBy = pieceToBeMoved;
+        //         }
+        //         if (i == cellLettersNumbers.length - 1) {
+        //             existX = false;
+        //             System.out.println("Not in-board cell");
+        //         }
+        //     }
+        // } while (!existX || !existY);
+        // if (pieceToBeMoved.cellsAllowed.contains(
+        //         board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2)) - 1])
+        //         && pieceToBeMoved2.cellsAllowed.contains(board[Integer.parseInt(cellLettersNumbers[indexOfX + 8])
+        //                 - 1][Integer.parseInt(x.substring(1, 2)) - 1])) {
+        //     System.out.println("Common cell!!");
+        //     System.out.println("Please, specify which piece to move");
+        // } else if (pieceToBeMoved.cellsAllowed.contains(
+        //         board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
+        //                 - 1])) {
+        //     board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
+        //     board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
+        //     pieceToBeMoved.setPosition(Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1,
+        //             Integer.parseInt(x.substring(1, 2)) - 1);
+        //     board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
+        //             - 1].isOccupied = true;
+        //     board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
+        //             - 1].takenBy = pieceToBeMoved;
 
-        } else {
-            System.out.println("Not available cell for such a piece!");
-        }
+        // } else {
+        //     System.out.println("Not available cell for such a piece!");
+        // }
     }
 
     public void displayBoard() {
