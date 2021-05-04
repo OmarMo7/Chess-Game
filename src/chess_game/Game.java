@@ -3,7 +3,6 @@ package chess_game;
 import java.util.Scanner;
 import static chess_game.Board.board;
 import static chess_game.Board.piecesOfPlayer1;
-import static chess_game.Board.cellLettersNumbers;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

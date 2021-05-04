@@ -25,7 +25,6 @@ public class Board {
 
     // Mehtod setPosition to be made
     public void construct(Board b) {
-        String letter = "";
         String material_name = "";
         String material_type = "";
         String material_color = "";
