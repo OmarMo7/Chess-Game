@@ -16,8 +16,6 @@ import static chess_game.Board.cellLettersNumbers;
  * @author Omar Mostafa
  */
 public class Game {
-    // public ArrayList <Piece> piecesOfPlayer1 = new ArrayList();
-    // public static ArrayList <Piece> piecesOfPlayer2 = new ArrayList();
 
     public Game() {
 
@@ -31,7 +29,6 @@ public class Game {
             System.out.println("Hello, please choose an option!");
             System.out.println("1- dsiplay board");
             System.out.println("2- move");
-            System.out.println("3- see cells allowed");
             Scanner input = new Scanner(System.in);
             Scanner input2 = new Scanner(System.in);
             int x = input.nextInt();
@@ -43,20 +40,6 @@ public class Game {
                     move();
                     displayBoard();
                     break;
-                case 3:
-                    // System.out.println("Enter the cell: ");
-                    // String xx = input2.next();
-                    // for (int i = 0; i < board[Integer.parseInt(xx.substring(0, 1))][Integer
-                    // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.size(); i++) {
-                    // System.out.println(board[Integer.parseInt(xx.substring(0, 1))][Integer
-                    // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).x_axis + " "
-                    // + board[Integer.parseInt(xx.substring(0, 1))][Integer
-                    // .parseInt(xx.substring(1, 2))].takenBy.cellsAllowed.get(i).y_axis);
-                    // }
-                    // System.out.println(
-                    // board[Integer.parseInt(xx.substring(0, 1))][Integer.parseInt(xx.substring(1,
-                    // 2))].takenBy.name);
-                    // break;
                 default:
                     break;
             }
@@ -70,25 +53,13 @@ public class Game {
 
     public void move() {
         String x = new String();
-        int pawnCell = 0;
-        int indexOfX = 0;
         String name = new String();
         Piece pieceToBeMoved = new Piece("", "", "", 0, 0);
-        Piece pieceToBeMoved2 = new Piece("", "", "", 0, 0);
         Scanner input = new Scanner(System.in);
         boolean existPiece = false;
         do {
             System.out.println("Enter the piece name");
             name = input.next();
-            if (name.length() == 1) {
-                for (int i = 0; i < cellLettersNumbers.length; i++) {
-                    if (cellLettersNumbers[i].equals(name)) {
-                        pawnCell = i;
-                        existPiece = true;
-                        break;
-                    }
-                }
-            }
 
             switch (name.length()) {
                 case 2:
@@ -114,73 +85,7 @@ public class Game {
             }
         } while (!existPiece);
 
-        // for (int i = 0; i < piecesOfPlayer1.size(); i++) {
-        // if (piecesOfPlayer1.get(i).name.equals(name)) {
-        // for (int k = i + 1; k < piecesOfPlayer1.size(); k++) {
-        // if (piecesOfPlayer1.get(k).name.equals(name)) {
-        // pieceToBeMoved2 = piecesOfPlayer1.get(k);
-        // }
-        // }
-        // existPiece = true;
-        // pieceToBeMoved = piecesOfPlayer1.get(i);
-        // break;
-        // } else if (i == piecesOfPlayer1.size() - 1) {
-        // existPiece = false;
-        // break;
-        // }
-        // }
-        // } while (!existPiece);
-        // boolean existX = false;
-        // boolean existY = false;
-        // System.out.println("Enter where do you want to move your piece as x * y");
-        // do {
-        // x = input.next();
-        // for (int i = 0; i < cellLettersNumbers.length; i++) {
-        // if (x.length() > 2)// Another message to be displayed here
-        // break;
-        // if (cellLettersNumbers[i].equals(x.substring(0, 1))) {
-        // existX = true;
-        // indexOfX = i;
-        // i += (8 - i); // To jump over the rest of letters
-        // } else if (cellLettersNumbers[i].equals(x.substring(1, 2))) {
-        // existY = true;
-        // break;
-
-        // }
-        // if (i == cellLettersNumbers.length - 1) {
-        // existX = false;
-        // System.out.println("Not in-board cell");
-        // }
-        // }
-        // } while (!existX || !existY);
-        // if (pieceToBeMoved.cellsAllowed.contains(
-        // board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) -
-        // 1][Integer.parseInt(x.substring(1, 2)) - 1])
-        // &&
-        // pieceToBeMoved2.cellsAllowed.contains(board[Integer.parseInt(cellLettersNumbers[indexOfX
-        // + 8])
-        // - 1][Integer.parseInt(x.substring(1, 2)) - 1])) {
-        // System.out.println("Common cell!!");
-        // System.out.println("Please, specify which piece to move");
-        // } else if (pieceToBeMoved.cellsAllowed.contains(
-        // board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) -
-        // 1][Integer.parseInt(x.substring(1, 2))
-        // - 1])) {
-        // board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
-        // board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
-        // pieceToBeMoved.setPosition(Integer.parseInt(cellLettersNumbers[indexOfX + 8])
-        // - 1,
-        // Integer.parseInt(x.substring(1, 2)) - 1);
-        // board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) -
-        // 1][Integer.parseInt(x.substring(1, 2))
-        // - 1].isOccupied = true;
-        // board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) -
-        // 1][Integer.parseInt(x.substring(1, 2))
-        // - 1].takenBy = pieceToBeMoved;
-
-        // } else {
-        // System.out.println("Not available cell for such a piece!");
-        // }
+        
 
     }
 
@@ -275,45 +180,45 @@ public class Game {
     }
 
     int enumerate(char c) {
-        int rank = 0;
+        int index = 0;
         switch (c) {
             case 'a':
             case '1':
-                rank = 1;
+                index = 1;
                 break;
             case 'b':
             case '2':
-                rank = 2;
+                index = 2;
                 break;
             case 'c':
             case '3':
-                rank = 3;
+                index = 3;
                 break;
             case 'd':
             case '4':
-                rank = 4;
+                index = 4;
                 break;
             case 'e':
             case '5':
-                rank = 5;
+                index = 5;
                 break;
             case 'f':
             case '6':
-                rank = 6;
+                index = 6;
                 break;
             case 'g':
             case '7':
-                rank = 7;
+                index = 7;
                 break;
             case 'h':
             case '8':
-                rank = 8;
+                index = 8;
                 break;
 
             default:
                 break;
         }
-        return rank;
+        return index;
     }
 
     Piece check(char material_name, String notation, boolean common, int file, int rank, Piece pieceToBeMoved) {
@@ -335,8 +240,6 @@ public class Game {
         if (common) {
 
             if (p1_contains_cell && p2_contains_cell) {
-                // System.out.println("Please, specify piece");
-                // System.out.println("ERROR!.. Invalid Notation");
                 int difference = enumerate(notation.charAt(notation.length() - 3)) - 1;
                 if (piecesOfPlayer1.get(first_material_index).x_axis == piecesOfPlayer1
                         .get(second_material_index).x_axis) {
