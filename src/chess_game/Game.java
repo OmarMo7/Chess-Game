@@ -93,21 +93,26 @@ public class Game {
             switch (name.length()) {
                 case 3:
                     pieceToBeMoved = detectPiece(name, false, false); // e.g. NF3
+                    existPiece = true;
                     break;
                 case 4:
                     if (name.contains("x")) {
                         pieceToBeMoved = detectPiece(name, false, true); // e.g. NxF3
+                        existPiece = true;
                     } else {
                         pieceToBeMoved = detectPiece(name, true, false); // e.g. NbF3 or e.g. N1F3
+                        existPiece = true;
                     }
                     break;
                 case 5:
                     pieceToBeMoved = detectPiece(name, true, true); // e.g. NbxF3 or e.g. N1xF3
+                    existPiece = true;
                     break;
                 default:
                     break;
             }
         } while(!existPiece);
+        
         //     for (int i = 0; i < piecesOfPlayer1.size(); i++) {
         //         if (piecesOfPlayer1.get(i).name.equals(name)) {
         //             for (int k = i + 1; k < piecesOfPlayer1.size(); k++) {
@@ -173,8 +178,8 @@ public class Game {
     public void displayBoard() {
 
         // White perspective
-        System.out.println("White To Move...");
-        for (int i = 7; i >= 0; i--) {
+        System.out.println("Black To Move...");
+        for (int i = 0; i < 8; i++) {
             for (int j = 7; j >= 0; j--) {
                 if (j == 7)
                     System.out.print("|");
@@ -189,8 +194,8 @@ public class Game {
         }
         System.out.print("\n");
         // Black perspective
-        System.out.println("Black To Move...");
-        for (int i = 0; i < 8; i++) {
+        System.out.println("White To Move...");
+        for (int i = 7; i >= 0; i--) {
             for (int j = 0; j < 8; j++) {
                 if (j == 0)
                     System.out.print("|");
@@ -216,10 +221,10 @@ public class Game {
         Piece pieceToBeMoved = null;
         switch (notation.charAt(0)) {
             case 'R':
-                pieceToBeMoved = check('R', notation, common, file, rank, pieceToBeMoved);
+                check('R', notation, common, file, rank, pieceToBeMoved);
                 break;
             case 'N':
-                pieceToBeMoved = check('N', notation, common, file, rank, pieceToBeMoved);
+                check('N', notation, common, file, rank, pieceToBeMoved);
                 break;
             default:
                 break;
@@ -270,21 +275,21 @@ public class Game {
         return rank;
     }
 
-    Piece check(char material_name, String notation, boolean common, int file, int rank, Piece pieceToBeMoved) {
+    void check(char material_name, String notation, boolean common, int file, int rank, Piece pieceToBeMoved) {
         boolean p1_contains_cell = false;
         boolean p2_contains_cell = false;
         int first_material_index = 0;
         int second_material_index = 0;
         if (material_name == 'R') {
             p1_contains_cell = piecesOfPlayer1.get(0).cellsAllowed.contains(board[file][rank]);
-            p2_contains_cell = piecesOfPlayer1.get(15).cellsAllowed.contains(board[file][rank]);
+            p2_contains_cell = piecesOfPlayer1.get(14).cellsAllowed.contains(board[file][rank]);
             first_material_index = 0;
-            second_material_index = 15;
+            second_material_index = 14;
         } else if (material_name == 'N') {
             p1_contains_cell = piecesOfPlayer1.get(2).cellsAllowed.contains(board[file][rank]);
-            p2_contains_cell = piecesOfPlayer1.get(13).cellsAllowed.contains(board[file][rank]);
+            p2_contains_cell = piecesOfPlayer1.get(12).cellsAllowed.contains(board[file][rank]);
             first_material_index = 2;
-            second_material_index = 13;
+            second_material_index = 12;
         }
         if (common) {
 
@@ -314,11 +319,10 @@ public class Game {
                 pieceToBeMoved = piecesOfPlayer1.get(second_material_index);
             }
         }
-        board[piecesOfPlayer1.get(first_material_index).x_axis][piecesOfPlayer1
-                .get(first_material_index).y_axis].takenBy = null;
-        board[piecesOfPlayer1.get(first_material_index).x_axis][piecesOfPlayer1
-                .get(first_material_index).y_axis].isOccupied = false;
-
-        return pieceToBeMoved;
+        board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
+        board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
+        pieceToBeMoved.setPosition(file, rank);
+        board[file][rank].takenBy = pieceToBeMoved;
+        board[file][rank].isOccupied = true;
     }
 }
