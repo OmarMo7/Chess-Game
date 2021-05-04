@@ -30,7 +30,6 @@ public class Game {
             System.out.println("1- dsiplay board");
             System.out.println("2- move");
             Scanner input = new Scanner(System.in);
-            Scanner input2 = new Scanner(System.in);
             int x = input.nextInt();
             switch (x) {
                 case 1:
@@ -52,7 +51,6 @@ public class Game {
     // letter together instead of checking each one at once
 
     public void move() {
-        String x = new String();
         String name = new String();
         Piece pieceToBeMoved = new Piece("", "", "", 0, 0);
         Scanner input = new Scanner(System.in);
@@ -64,28 +62,26 @@ public class Game {
             switch (name.length()) {
                 case 2:
                 case 3:
-                    pieceToBeMoved = detectPiece(name, false, false); // e.g. NF3
+                    pieceToBeMoved = detectPiece(name, false, false, pieceToBeMoved); // e.g. NF3
                     existPiece = true;
                     break;
                 case 4:
                     if (name.contains("x")) {
-                        pieceToBeMoved = detectPiece(name, false, true); // e.g. NxF3
+                        pieceToBeMoved = detectPiece(name, false, true, pieceToBeMoved); // e.g. NxF3
                         existPiece = true;
                     } else {
-                        pieceToBeMoved = detectPiece(name, true, false); // e.g. NbF3 or e.g. N1F3
+                        pieceToBeMoved = detectPiece(name, true, false, pieceToBeMoved); // e.g. NbF3 or e.g. N1F3
                         existPiece = true;
                     }
                     break;
                 case 5:
-                    pieceToBeMoved = detectPiece(name, true, true); // e.g. NbxF3 or e.g. N1xF3
+                    pieceToBeMoved = detectPiece(name, true, true, pieceToBeMoved); // e.g. NbxF3 or e.g. N1xF3
                     existPiece = true;
                     break;
                 default:
                     break;
             }
         } while (!existPiece);
-
-        
 
     }
 
@@ -125,14 +121,13 @@ public class Game {
         }
     }
 
-    Piece detectPiece(String notation, boolean common, boolean takes) {
+    Piece detectPiece(String notation, boolean common, boolean takes, Piece pieceToBeMoved) {
         // Test case 1 >>> Nf3
         // Test case 2 >>> N1f3
         // Test case 3 >>> N1xf3
         // TODO: PieceToBeMoved is to be added as a fourth param
         int file = enumerate(notation.charAt(notation.length() - 2)) - 1; // f --> 1 as index
         int rank = enumerate(notation.charAt(notation.length() - 1)) - 1; // 3 --> 2 as index
-        Piece pieceToBeMoved = null;
         switch (notation.charAt(0)) {
             case 'a':
             case 'b':
@@ -155,27 +150,35 @@ public class Game {
                     pieceToBeMoved = piecesOfPlayer1.get(4);
                 } else if (piecesOfPlayer1.get(10).cellsAllowed.contains(board[file][rank])) {
                     pieceToBeMoved = piecesOfPlayer1.get(10);
+                } else {
+                    System.out.println("ERROR!.. Unavailable cell");
                 }
                 break;
             case 'Q':
                 if (piecesOfPlayer1.get(6).cellsAllowed.contains(board[file][rank])) {
                     pieceToBeMoved = piecesOfPlayer1.get(6);
+                } else {
+                    System.out.println("ERROR!.. Unavailable cell");
                 }
                 break;
             case 'K':
                 if (piecesOfPlayer1.get(8).cellsAllowed.contains(board[file][rank])) {
                     pieceToBeMoved = piecesOfPlayer1.get(8);
+                } else {
+                    System.out.println("ERROR!.. Unavailable cell");
                 }
                 break;
             default:
                 System.out.println("ERROR!..Invalid piece notation");
                 break;
         }
-        board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
-        board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
-        pieceToBeMoved.setPosition(file, rank);
-        board[file][rank].takenBy = pieceToBeMoved;
-        board[file][rank].isOccupied = true;
+        if (pieceToBeMoved.name != "") {
+            board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
+            board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
+            pieceToBeMoved.setPosition(file, rank);
+            board[file][rank].takenBy = pieceToBeMoved;
+            board[file][rank].isOccupied = true;
+        }
         return pieceToBeMoved;
     }
 
@@ -265,6 +268,8 @@ public class Game {
                 pieceToBeMoved = piecesOfPlayer1.get(first_material_index);
             } else if (!p1_contains_cell && p2_contains_cell) {
                 pieceToBeMoved = piecesOfPlayer1.get(second_material_index);
+            } else {
+                System.out.println("ERROR!.. Unavailable cell");
             }
         }
         return pieceToBeMoved;
