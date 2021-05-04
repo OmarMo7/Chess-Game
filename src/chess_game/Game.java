@@ -84,13 +84,14 @@ public class Game {
                 for (int i = 0; i < cellLettersNumbers.length; i++) {
                     if (cellLettersNumbers[i].equals(name)) {
                         pawnCell = i;
+                        existPiece = true;
                         break;
                     }
                 }
             }
-            
 
             switch (name.length()) {
+                case 2:
                 case 3:
                     pieceToBeMoved = detectPiece(name, false, false); // e.g. NF3
                     existPiece = true;
@@ -111,70 +112,78 @@ public class Game {
                 default:
                     break;
             }
-        } while(!existPiece);
-        
-        //     for (int i = 0; i < piecesOfPlayer1.size(); i++) {
-        //         if (piecesOfPlayer1.get(i).name.equals(name)) {
-        //             for (int k = i + 1; k < piecesOfPlayer1.size(); k++) {
-        //                 if (piecesOfPlayer1.get(k).name.equals(name)) {
-        //                     pieceToBeMoved2 = piecesOfPlayer1.get(k);
-        //                 }
-        //             }
-        //             existPiece = true;
-        //             pieceToBeMoved = piecesOfPlayer1.get(i);
-        //             break;
-        //         } else if (i == piecesOfPlayer1.size() - 1) {
-        //             existPiece = false;
-        //             break;
-        //         }
-        //     }
+        } while (!existPiece);
+
+        // for (int i = 0; i < piecesOfPlayer1.size(); i++) {
+        // if (piecesOfPlayer1.get(i).name.equals(name)) {
+        // for (int k = i + 1; k < piecesOfPlayer1.size(); k++) {
+        // if (piecesOfPlayer1.get(k).name.equals(name)) {
+        // pieceToBeMoved2 = piecesOfPlayer1.get(k);
+        // }
+        // }
+        // existPiece = true;
+        // pieceToBeMoved = piecesOfPlayer1.get(i);
+        // break;
+        // } else if (i == piecesOfPlayer1.size() - 1) {
+        // existPiece = false;
+        // break;
+        // }
+        // }
         // } while (!existPiece);
         // boolean existX = false;
         // boolean existY = false;
         // System.out.println("Enter where do you want to move your piece as x * y");
         // do {
-        //     x = input.next();
-        //     for (int i = 0; i < cellLettersNumbers.length; i++) {
-        //         if (x.length() > 2)// Another message to be displayed here
-        //             break;
-        //         if (cellLettersNumbers[i].equals(x.substring(0, 1))) {
-        //             existX = true;
-        //             indexOfX = i;
-        //             i += (8 - i); // To jump over the rest of letters
-        //         } else if (cellLettersNumbers[i].equals(x.substring(1, 2))) {
-        //             existY = true;
-        //             break;
+        // x = input.next();
+        // for (int i = 0; i < cellLettersNumbers.length; i++) {
+        // if (x.length() > 2)// Another message to be displayed here
+        // break;
+        // if (cellLettersNumbers[i].equals(x.substring(0, 1))) {
+        // existX = true;
+        // indexOfX = i;
+        // i += (8 - i); // To jump over the rest of letters
+        // } else if (cellLettersNumbers[i].equals(x.substring(1, 2))) {
+        // existY = true;
+        // break;
 
-        //         }
-        //         if (i == cellLettersNumbers.length - 1) {
-        //             existX = false;
-        //             System.out.println("Not in-board cell");
-        //         }
-        //     }
+        // }
+        // if (i == cellLettersNumbers.length - 1) {
+        // existX = false;
+        // System.out.println("Not in-board cell");
+        // }
+        // }
         // } while (!existX || !existY);
         // if (pieceToBeMoved.cellsAllowed.contains(
-        //         board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2)) - 1])
-        //         && pieceToBeMoved2.cellsAllowed.contains(board[Integer.parseInt(cellLettersNumbers[indexOfX + 8])
-        //                 - 1][Integer.parseInt(x.substring(1, 2)) - 1])) {
-        //     System.out.println("Common cell!!");
-        //     System.out.println("Please, specify which piece to move");
+        // board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) -
+        // 1][Integer.parseInt(x.substring(1, 2)) - 1])
+        // &&
+        // pieceToBeMoved2.cellsAllowed.contains(board[Integer.parseInt(cellLettersNumbers[indexOfX
+        // + 8])
+        // - 1][Integer.parseInt(x.substring(1, 2)) - 1])) {
+        // System.out.println("Common cell!!");
+        // System.out.println("Please, specify which piece to move");
         // } else if (pieceToBeMoved.cellsAllowed.contains(
-        //         board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
-        //                 - 1])) {
-        //     board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
-        //     board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
-        //     pieceToBeMoved.setPosition(Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1,
-        //             Integer.parseInt(x.substring(1, 2)) - 1);
-        //     board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
-        //             - 1].isOccupied = true;
-        //     board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) - 1][Integer.parseInt(x.substring(1, 2))
-        //             - 1].takenBy = pieceToBeMoved;
+        // board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) -
+        // 1][Integer.parseInt(x.substring(1, 2))
+        // - 1])) {
+        // board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
+        // board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
+        // pieceToBeMoved.setPosition(Integer.parseInt(cellLettersNumbers[indexOfX + 8])
+        // - 1,
+        // Integer.parseInt(x.substring(1, 2)) - 1);
+        // board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) -
+        // 1][Integer.parseInt(x.substring(1, 2))
+        // - 1].isOccupied = true;
+        // board[Integer.parseInt(cellLettersNumbers[indexOfX + 8]) -
+        // 1][Integer.parseInt(x.substring(1, 2))
+        // - 1].takenBy = pieceToBeMoved;
 
         // } else {
-        //     System.out.println("Not available cell for such a piece!");
+        // System.out.println("Not available cell for such a piece!");
         // }
-    
+
     }
+
     public void displayBoard() {
 
         // White perspective
@@ -220,16 +229,48 @@ public class Game {
         int rank = enumerate(notation.charAt(notation.length() - 1)) - 1; // 3 --> 2 as index
         Piece pieceToBeMoved = null;
         switch (notation.charAt(0)) {
+            case 'a':
+            case 'b':
+            case 'c':
+            case 'd':
+            case 'e':
+            case 'f':
+            case 'g':
+            case 'h':
+                pieceToBeMoved = piecesOfPlayer1.get((enumerate(notation.charAt(0))) * 2 - 1);
+                break;
             case 'R':
-                check('R', notation, common, file, rank, pieceToBeMoved);
+                pieceToBeMoved = check('R', notation, common, file, rank, pieceToBeMoved);
                 break;
             case 'N':
-                check('N', notation, common, file, rank, pieceToBeMoved);
+                pieceToBeMoved = check('N', notation, common, file, rank, pieceToBeMoved);
+                break;
+            case 'B':
+                if (piecesOfPlayer1.get(4).cellsAllowed.contains(board[file][rank])) {
+                    pieceToBeMoved = piecesOfPlayer1.get(4);
+                } else if (piecesOfPlayer1.get(10).cellsAllowed.contains(board[file][rank])) {
+                    pieceToBeMoved = piecesOfPlayer1.get(10);
+                }
+                break;
+            case 'Q':
+                if (piecesOfPlayer1.get(6).cellsAllowed.contains(board[file][rank])) {
+                    pieceToBeMoved = piecesOfPlayer1.get(6);
+                }
+                break;
+            case 'K':
+                if (piecesOfPlayer1.get(8).cellsAllowed.contains(board[file][rank])) {
+                    pieceToBeMoved = piecesOfPlayer1.get(8);
+                }
                 break;
             default:
+                System.out.println("ERROR!..Invalid piece notation");
                 break;
         }
-
+        board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
+        board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
+        pieceToBeMoved.setPosition(file, rank);
+        board[file][rank].takenBy = pieceToBeMoved;
+        board[file][rank].isOccupied = true;
         return pieceToBeMoved;
     }
 
@@ -275,7 +316,7 @@ public class Game {
         return rank;
     }
 
-    void check(char material_name, String notation, boolean common, int file, int rank, Piece pieceToBeMoved) {
+    Piece check(char material_name, String notation, boolean common, int file, int rank, Piece pieceToBeMoved) {
         boolean p1_contains_cell = false;
         boolean p2_contains_cell = false;
         int first_material_index = 0;
@@ -303,6 +344,10 @@ public class Game {
                 } else if (piecesOfPlayer1.get(first_material_index).y_axis == piecesOfPlayer1
                         .get(second_material_index).y_axis) {
                     pieceToBeMoved = board[difference][piecesOfPlayer1.get(first_material_index).y_axis].takenBy;
+                } else if (difference == piecesOfPlayer1.get(first_material_index).x_axis) {
+                    pieceToBeMoved = board[difference][piecesOfPlayer1.get(first_material_index).y_axis].takenBy;
+                } else if (difference == piecesOfPlayer1.get(second_material_index).x_axis) {
+                    pieceToBeMoved = board[difference][piecesOfPlayer1.get(second_material_index).y_axis].takenBy;
                 }
             } else if (p1_contains_cell && !p2_contains_cell) {
                 pieceToBeMoved = piecesOfPlayer1.get(first_material_index);
@@ -319,10 +364,6 @@ public class Game {
                 pieceToBeMoved = piecesOfPlayer1.get(second_material_index);
             }
         }
-        board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
-        board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
-        pieceToBeMoved.setPosition(file, rank);
-        board[file][rank].takenBy = pieceToBeMoved;
-        board[file][rank].isOccupied = true;
+        return pieceToBeMoved;
     }
 }
