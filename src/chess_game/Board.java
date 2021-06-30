@@ -1,6 +1,7 @@
 package chess_game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -91,6 +92,11 @@ public class Board {
 
             }
 
+        }
+        int i = 0;
+        while (i < piecesOfPlayer2.size()) {
+            Collections.swap(piecesOfPlayer2, i, i + 1);
+            i += 2;
         }
     }
 
