@@ -101,12 +101,11 @@ public class Board {
     }
 
     void lookup() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (board[i][j].isOccupied) {
-                    board[i][j].takenBy.calculateCells();
-                }
-            }
+        for (int i = 0; i < piecesOfPlayer1.size(); i++) {
+            piecesOfPlayer1.get(i).cellsAllowed()
+        }
+        for (int i = 0; i < piecesOfPlayer2.size(); i++) {
+            piecesOfPlayer2.get(i).cellsAllowed()
         }
     }
 }
