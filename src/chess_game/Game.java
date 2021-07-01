@@ -21,12 +21,14 @@ public class Game {
     public Game() {
 
     }
-public static boolean WhiteToMove = true;
+
+    public static boolean WhiteToMove = true;
+
     public void start() {
         Board b = new Board();
         b.construct(b);
         while (true) {
-            b.lookup();
+            b.lookup(WhiteToMove);
             Scanner input = new Scanner(System.in);
             int x = 2;
 
@@ -37,11 +39,7 @@ public static boolean WhiteToMove = true;
                 case 2:
                     displayBoard(WhiteToMove);
                     if (move(WhiteToMove)) {
-                        if (WhiteToMove) {
-                            WhiteToMove = false;
-                        } else {
-                            WhiteToMove = true;
-                        }
+                        WhiteToMove = !WhiteToMove;
                     }
                     break;
                 default:
@@ -211,12 +209,11 @@ public static boolean WhiteToMove = true;
                 player = piecesOfPlayer1;
                 player.remove(board[file][rank].takenBy);
                 board[file][rank].takenBy = pieceToBeMoved;
-            } else if(board[file][rank].isOccupied && WhiteToMove){
+            } else if (board[file][rank].isOccupied && WhiteToMove) {
                 player = piecesOfPlayer2;
                 player.remove(board[file][rank].takenBy);
                 board[file][rank].takenBy = pieceToBeMoved;
-            } 
-            else {
+            } else {
                 board[file][rank].takenBy = pieceToBeMoved;
                 board[file][rank].isOccupied = true;
             }
