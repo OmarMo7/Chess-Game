@@ -100,12 +100,16 @@ public class Board {
         }
     }
 
-    void lookup() {
-        for (int i = 0; i < piecesOfPlayer1.size(); i++) {
-            piecesOfPlayer1.get(i).cellsAllowed()
+    void lookup(boolean WhiteToMove) {
+        ArrayList <Piece>PlayerToMovePieces = null; 
+        if(WhiteToMove){
+            PlayerToMovePieces = piecesOfPlayer1;
         }
-        for (int i = 0; i < piecesOfPlayer2.size(); i++) {
-            piecesOfPlayer2.get(i).cellsAllowed()
+        else{
+            PlayerToMovePieces = piecesOfPlayer2;
+        }
+        for (int i = 0; i < PlayerToMovePieces.size(); i++) {
+            PlayerToMovePieces.get(i).calculateCells();
         }
     }
 }
