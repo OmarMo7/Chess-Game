@@ -38,7 +38,6 @@ public class Piece {
         case "Pawn":
             if (this.y_axis > 7) // Precaution condition
                 break;
-            boolean begin = true;
             Cell classic_move_cell_1 = null;
             Cell classic_move_cell_2 = null;
             Cell cell_ahead = null;
@@ -55,7 +54,7 @@ public class Piece {
                 two_cells_ahead = board[this.x_axis][this.y_axis - 2];
             }
             // Classic move of a pawn at the beginning of a game
-            if (!classic_move_cell_1.isOccupied && !classic_move_cell_2.isOccupied && begin) {
+            if (!classic_move_cell_1.isOccupied && !classic_move_cell_2.isOccupied && this.y_axis == 1) {
                 cellsAllowed.add(cell_ahead);
                 cellsAllowed.add(two_cells_ahead);
                 begin = false;
