@@ -2,6 +2,7 @@ package chess_game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import static chess_game.Game.ThreateningPiece;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -101,11 +102,10 @@ public class Board {
     }
 
     void lookup(boolean WhiteToMove) {
-        ArrayList <Piece>PlayerToMovePieces = null; 
-        if(WhiteToMove){
+        ArrayList<Piece> PlayerToMovePieces = null;
+        if (WhiteToMove) {
             PlayerToMovePieces = piecesOfPlayer1;
-        }
-        else{
+        } else {
             PlayerToMovePieces = piecesOfPlayer2;
         }
         for (int i = 0; i < PlayerToMovePieces.size(); i++) {

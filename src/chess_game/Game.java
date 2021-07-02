@@ -5,6 +5,7 @@ import java.util.Scanner;
 import static chess_game.Board.board;
 import static chess_game.Board.piecesOfPlayer1;
 import static chess_game.Board.piecesOfPlayer2;
+import static chess_game.Board.cellLettersNumbers;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,12 +24,16 @@ public class Game {
     }
 
     public static boolean WhiteToMove = true;
+    public static Piece ThreateningPiece = null;
 
     public void start() {
         Board b = new Board();
         b.construct(b);
         while (true) {
             b.lookup(WhiteToMove);
+            if (ThreateningPiece != null) {
+                System.out.println("Check!..");
+            }
             Scanner input = new Scanner(System.in);
             int x = 2;
 
@@ -73,9 +78,8 @@ public class Game {
         String name = new String();
         Piece pieceToBeMoved = new Piece("", "", "", 0, 0);
         Scanner input = new Scanner(System.in);
-        boolean existPiece = false;
         do {
-            System.out.println("Enter the piece name");
+            System.out.println("Enter the move notation: ");
             name = input.next();
             ArrayList<Piece> player = null;
             if (White) {
@@ -87,26 +91,33 @@ public class Game {
                 case 2:
                 case 3:
                     pieceToBeMoved = detectPiece(name, false, false, player, pieceToBeMoved); // e.g. NF3
-                    existPiece = true;
                     break;
                 case 4:
                     if (name.contains("x")) {
                         pieceToBeMoved = detectPiece(name, false, true, player, pieceToBeMoved); // e.g. NxF3
-                        existPiece = true;
                     } else {
-                        pieceToBeMoved = detectPiece(name, true, false, player, pieceToBeMoved); // e.g. NbF3 or e.g.
+                        pieceToBeMoved = detectPiece(name, true, false, player, pieceToBeMoved); // e.g. NbF3 or e.g. //
                                                                                                  // N1F3
-                        existPiece = true;
                     }
                     break;
                 case 5:
                     pieceToBeMoved = detectPiece(name, true, true, player, pieceToBeMoved); // e.g. NbxF3 or e.g. N1xF3
-                    existPiece = true;
                     break;
                 default:
                     break;
             }
-        } while (!existPiece);
+            //TODO: to detect if the king has been protected or not
+            if (ThreateningPiece != null && player.get(8).isThreatened) {
+                ThreateningPiece.calculateCells();
+                for (int i = 0; i < ThreateningPiece.cellsAllowed.size(); i++) {
+                    if (!ThreateningPiece.cellsAllowed.isEmpty()
+                        && ThreateningPiece.cellsAllowed.contains(board[player.get(8).x_axis][player.get(8).y_axis])) {
+                        System.out.println("Invalid move.. Your king is checked!");
+                        return move(White);
+                    }
+                }
+            }
+        } while (pieceToBeMoved.name == "");
         return true;
     }
 
@@ -155,6 +166,7 @@ public class Game {
         // Test case 2 >>> N1f3
         // Test case 3 >>> N1xf3
         // TODO: PieceToBeMoved is to be added as a fourth param
+        Piece Other_King = new Piece("", "", "", 0, 0);
         int file = enumerate(notation.charAt(notation.length() - 2)) - 1; // f --> 1 as index
         int rank = enumerate(notation.charAt(notation.length() - 1)) - 1; // 3 --> 2 as index
         switch (notation.charAt(0)) {
@@ -166,7 +178,11 @@ public class Game {
             case 'f':
             case 'g':
             case 'h':
-                pieceToBeMoved = player.get((enumerate(notation.charAt(0))) * 2 - 1);
+                if (player.get((enumerate(notation.charAt(0))) * 2 - 1).cellsAllowed.contains(board[file][rank])) {
+                    pieceToBeMoved = player.get((enumerate(notation.charAt(0))) * 2 - 1);
+                } else {
+                    System.out.println("ERROR!.. Unavailable cell");
+                }
                 break;
             case 'R':
                 pieceToBeMoved = check('R', notation, common, file, rank, player, pieceToBeMoved);
@@ -216,6 +232,20 @@ public class Game {
             } else {
                 board[file][rank].takenBy = pieceToBeMoved;
                 board[file][rank].isOccupied = true;
+            }
+            if (WhiteToMove) {
+                Other_King = piecesOfPlayer2.get(8);
+            } else {
+                Other_King = piecesOfPlayer1.get(8);
+            }
+            for (int i = 0; i < player.size(); i++) {
+                Piece CurrentPiece = player.get(i);
+                CurrentPiece.calculateCells();
+                if (!CurrentPiece.cellsAllowed.isEmpty()
+                        && CurrentPiece.cellsAllowed.contains(board[Other_King.x_axis][Other_King.y_axis])) {
+                    Other_King.isThreatened = true;
+                    ThreateningPiece = CurrentPiece;
+                }
             }
         }
         return pieceToBeMoved;
