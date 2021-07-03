@@ -106,12 +106,13 @@ public class Game {
                 default:
                     break;
             }
-            //TODO: to detect if the king has been protected or not
+            // TODO: to detect if the king has been protected or not
+
             if (ThreateningPiece != null && player.get(8).isThreatened) {
                 ThreateningPiece.calculateCells();
                 for (int i = 0; i < ThreateningPiece.cellsAllowed.size(); i++) {
-                    if (!ThreateningPiece.cellsAllowed.isEmpty()
-                        && ThreateningPiece.cellsAllowed.contains(board[player.get(8).x_axis][player.get(8).y_axis])) {
+                    if (!ThreateningPiece.cellsAllowed.isEmpty() && ThreateningPiece.cellsAllowed
+                            .contains(board[player.get(8).x_axis][player.get(8).y_axis])) {
                         System.out.println("Invalid move.. Your king is checked!");
                         return move(White);
                     }
@@ -178,7 +179,9 @@ public class Game {
             case 'f':
             case 'g':
             case 'h':
-                if (player.get((enumerate(notation.charAt(0))) * 2 - 1).cellsAllowed.contains(board[file][rank])) {
+                if (!player.get((enumerate(notation.charAt(0))) * 2 - 1).isEaten
+                        && player.get((enumerate(notation.charAt(0))) * 2 - 1).cellsAllowed
+                                .contains(board[file][rank])) {
                     pieceToBeMoved = player.get((enumerate(notation.charAt(0))) * 2 - 1);
                 } else {
                     System.out.println("ERROR!.. Unavailable cell");
@@ -191,26 +194,26 @@ public class Game {
                 pieceToBeMoved = check('N', notation, common, file, rank, player, pieceToBeMoved);
                 break;
             case 'B':
-                if (player.get(4).cellsAllowed.contains(board[file][rank])) {
+                if (!player.get(4).isEaten && player.get(4).cellsAllowed.contains(board[file][rank])) {
                     pieceToBeMoved = player.get(4);
-                } else if (player.get(10).cellsAllowed.contains(board[file][rank])) {
+                } else if (!player.get(10).isEaten && player.get(10).cellsAllowed.contains(board[file][rank])) {
                     pieceToBeMoved = player.get(10);
                 } else {
-                    System.out.println("ERROR!.. Unavailable cell");
+                    System.out.println("ERROR!.. Unavailable piece or cell");
                 }
                 break;
             case 'Q':
-                if (player.get(6).cellsAllowed.contains(board[file][rank])) {
+                if (!player.get(6).isEaten && player.get(6).cellsAllowed.contains(board[file][rank])) {
                     pieceToBeMoved = player.get(6);
                 } else {
-                    System.out.println("ERROR!.. Unavailable cell");
+                    System.out.println("ERROR!.. Unavailable piece or cell");
                 }
                 break;
             case 'K':
-                if (player.get(8).cellsAllowed.contains(board[file][rank])) {
+                if (!player.get(8).isEaten && player.get(8).cellsAllowed.contains(board[file][rank])) {
                     pieceToBeMoved = player.get(8);
                 } else {
-                    System.out.println("ERROR!.. Unavailable cell");
+                    System.out.println("ERROR!.. Unavailable piece or cell");
                 }
                 break;
             default:
@@ -223,11 +226,11 @@ public class Game {
             pieceToBeMoved.setPosition(file, rank);
             if (board[file][rank].isOccupied && !WhiteToMove) {
                 player = piecesOfPlayer1;
-                player.remove(board[file][rank].takenBy);
                 board[file][rank].takenBy = pieceToBeMoved;
+                player.get(player.indexOf(board[file][rank].takenBy)).isEaten = true;
             } else if (board[file][rank].isOccupied && WhiteToMove) {
                 player = piecesOfPlayer2;
-                player.remove(board[file][rank].takenBy);
+                player.get(player.indexOf(board[file][rank].takenBy)).isEaten = true;
                 board[file][rank].takenBy = pieceToBeMoved;
             } else {
                 board[file][rank].takenBy = pieceToBeMoved;
@@ -247,6 +250,8 @@ public class Game {
                     ThreateningPiece = CurrentPiece;
                 }
             }
+        } else {
+            System.out.println("Unfound piece!");
         }
         return pieceToBeMoved;
     }
@@ -300,13 +305,21 @@ public class Game {
         int first_material_index = 0;
         int second_material_index = 0;
         if (material_name == 'R') {
-            p1_contains_cell = player.get(0).cellsAllowed.contains(board[file][rank]);
-            p2_contains_cell = player.get(14).cellsAllowed.contains(board[file][rank]);
+            if (!player.get(0).isEaten) {
+                p1_contains_cell = player.get(0).cellsAllowed.contains(board[file][rank]);
+            }
+            if (!player.get(14).isEaten) {
+                p2_contains_cell = player.get(14).cellsAllowed.contains(board[file][rank]);
+            }
             first_material_index = 0;
             second_material_index = 14;
         } else if (material_name == 'N') {
-            p1_contains_cell = player.get(2).cellsAllowed.contains(board[file][rank]);
-            p2_contains_cell = player.get(12).cellsAllowed.contains(board[file][rank]);
+            if (!player.get(2).isEaten) {
+                p1_contains_cell = player.get(2).cellsAllowed.contains(board[file][rank]);
+            }
+            if (!player.get(12).isEaten) {
+                p2_contains_cell = player.get(12).cellsAllowed.contains(board[file][rank]);
+            }
             first_material_index = 2;
             second_material_index = 12;
         }
