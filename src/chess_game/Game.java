@@ -106,16 +106,16 @@ public class Game {
                 default:
                     break;
             }
-            // TODO: to detect if the king has been protected or not
+            // TODO: if user enters notation of a piece that is not existed.. he shall not see the "Invalid move" message if his king was threatend
 
-            if (ThreateningPiece != null && player.get(8).isThreatened) {
+            if (ThreateningPiece != null && !ThreateningPiece.isEaten && player.get(8).isThreatened) {
                 ThreateningPiece.calculateCells();
-                for (int i = 0; i < ThreateningPiece.cellsAllowed.size(); i++) {
-                    if (!ThreateningPiece.cellsAllowed.isEmpty() && ThreateningPiece.cellsAllowed
-                            .contains(board[player.get(8).x_axis][player.get(8).y_axis])) {
-                        System.out.println("Invalid move.. Your king is checked!");
-                        return move(White);
-                    }
+                if (!ThreateningPiece.cellsAllowed.isEmpty()
+                        && ThreateningPiece.cellsAllowed.contains(board[player.get(8).x_axis][player.get(8).y_axis])) {
+                    System.out.println("Invalid move.. Your king is checked!");
+                    return move(White);
+                } else {
+                    ThreateningPiece = null;
                 }
             }
         } while (pieceToBeMoved.name == "");
@@ -224,23 +224,27 @@ public class Game {
             board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
             board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
             pieceToBeMoved.setPosition(file, rank);
+            ArrayList <Piece> Other_Player = null;
+            if (WhiteToMove) {
+                Other_King = piecesOfPlayer2.get(8);
+                Other_Player = piecesOfPlayer2;
+            } else {
+                Other_King = piecesOfPlayer1.get(8);
+                Other_Player = piecesOfPlayer1;
+            }
             if (board[file][rank].isOccupied && !WhiteToMove) {
-                player = piecesOfPlayer1;
+                Other_Player = piecesOfPlayer1;
+                Other_Player.get(Other_Player.indexOf(board[file][rank].takenBy)).isEaten = true;
                 board[file][rank].takenBy = pieceToBeMoved;
-                player.get(player.indexOf(board[file][rank].takenBy)).isEaten = true;
             } else if (board[file][rank].isOccupied && WhiteToMove) {
-                player = piecesOfPlayer2;
-                player.get(player.indexOf(board[file][rank].takenBy)).isEaten = true;
+                Other_Player = piecesOfPlayer2;
+                Other_Player.get(Other_Player.indexOf(board[file][rank].takenBy)).isEaten = true;
                 board[file][rank].takenBy = pieceToBeMoved;
             } else {
                 board[file][rank].takenBy = pieceToBeMoved;
                 board[file][rank].isOccupied = true;
             }
-            if (WhiteToMove) {
-                Other_King = piecesOfPlayer2.get(8);
-            } else {
-                Other_King = piecesOfPlayer1.get(8);
-            }
+            
             for (int i = 0; i < player.size(); i++) {
                 Piece CurrentPiece = player.get(i);
                 CurrentPiece.calculateCells();
