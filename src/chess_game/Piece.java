@@ -490,7 +490,8 @@ public class Piece {
         int king_xAxis = theOtherKing.x_axis;
         int king_yAxis = theOtherKing.y_axis;
 
-        int b = 2; // To protect the king with a piece, a single cells at least has to be free
+        // To protect the king with a piece, a single cells at least has to be free
+        int b = 2;
         while (this.x_axis + b <= 7 && this.y_axis + b <= 7) {
             if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
                 return true;
@@ -521,6 +522,44 @@ public class Piece {
         return false;
     }
 
+    boolean kingInterVertical() {
+        Piece theOtherKing = null;
+        theOtherKing = (WhiteToMove) ? piecesOfPlayer2.get(8) : piecesOfPlayer1.get(8);
+        int king_xAxis = theOtherKing.x_axis;
+        int king_yAxis = theOtherKing.y_axis;
+
+        // To protect the king with a piece, a single cells at least has to be free
+        int r = 2;
+        while (this.x_axis + r < 8) {
+            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+                return true;
+            }
+            r++;
+        }
+        r = 2;
+        while (this.x_axis - r >= 0) {
+            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+                return true;
+            }
+            r++;
+        }
+        r = 2;
+        while (this.y_axis + r < 8) {
+            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+                return true;
+            }
+            r++;
+        }
+        r = 2;
+        while (this.x_axis - r >= 0) {
+            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+                return true;
+            }
+            r++;
+        }
+        return false;
+
+    }
     // void checkThreat(String pieceName,ArrayList<Piece> capturedPieces){
     // switch (pieceName) {
     // case 'Bishop':
