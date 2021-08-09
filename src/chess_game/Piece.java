@@ -2,6 +2,9 @@ package chess_game;
 
 import java.util.ArrayList;
 import static chess_game.Board.board;
+import static chess_game.Game.WhiteToMove;
+import static chess_game.Board.piecesOfPlayer1;
+import static chess_game.Board.piecesOfPlayer2;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,6 +24,10 @@ public class Piece {
     int x_axis = 0, y_axis = 0;
     boolean isThreatened = false;
     boolean isEaten = false;
+    boolean isBlocking = false;
+
+    public ArrayList<Cell> cellsAllowed = new ArrayList();
+    public ArrayList<Piece> capturedPieces = new ArrayList();
 
     public Piece(String material_name, String type, String material_color, int x_axis, int y_axis) {
         this.name = material_name;
@@ -29,8 +36,6 @@ public class Piece {
         this.x_axis = x_axis;
         this.y_axis = y_axis;
     }
-
-    public ArrayList<Cell> cellsAllowed = new ArrayList();
 
     ArrayList calculateCells() {
         this.cellsAllowed.clear();
@@ -477,6 +482,110 @@ public class Piece {
         return cellsAllowed;
 
     }
+
+    boolean kingInterDiagonal() {
+
+        Piece theOtherKing = null;
+        theOtherKing = (WhiteToMove) ? piecesOfPlayer2.get(8) : piecesOfPlayer1.get(8);
+        int king_xAxis = theOtherKing.x_axis;
+        int king_yAxis = theOtherKing.y_axis;
+
+        int b = 2; // To protect the king with a piece, a single cells at least has to be free
+        while (this.x_axis + b <= 7 && this.y_axis + b <= 7) {
+            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+                return true;
+            }
+            b++;
+        }
+        b = 2;
+        while (this.x_axis - b >= 0 && this.y_axis - b >= 0) {
+            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+                return true;
+            }
+            b++;
+        }
+        b = 2;
+        while (this.x_axis - b >= 0 && this.y_axis + b <= 7) {
+            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+                return true;
+            }
+            b++;
+        }
+        b = 2;
+        while (this.x_axis + b <= 7 && this.y_axis - b >= 0) {
+            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+                return true;
+            }
+            b++;
+        }
+        return false;
+    }
+
+    // void checkThreat(String pieceName,ArrayList<Piece> capturedPieces){
+    // switch (pieceName) {
+    // case 'Bishop':
+    // int b = 1;
+    // while (this.x_axis + b <= 7 && this.y_axis + b <= 7) {
+    // Cell cell_up_left = board[this.x_axis + b][this.y_axis + b];
+    // if (cell_up_left.isOccupied && cell_up_left.takenBy.color != this.color &&
+    // cell_up_left.takenBy.name != "King") {
+    // capturedPieces.add(cell_up_left.takenBy);
+    // break;
+    // } else
+    // break;
+    // b++;
+    // }
+    // if (capturedPieces.size() == 1){
+    // capturedPieces.get(0).isBlocking = true;
+    // }
+    // else{
+    // capturedPieces.clear();
+    // }
+    // b = 1;
+    // while (this.x_axis - b >= 0 && this.y_axis - b >= 0) {
+    // Cell cell_down_right = board[this.x_axis - b][this.y_axis - b];
+    // if (!cell_down_right.isOccupied) {
+    // cellsAllowed.add(cell_down_right);
+    // } else if (cell_down_right.isOccupied && cell_down_right.takenBy.color !=
+    // this.color) {
+    // cellsAllowed.add(cell_down_right);
+    // break;
+    // } else
+    // break;
+    // b++;
+    // }
+    // b = 1;
+    // while (this.x_axis - b >= 0 && this.y_axis + b <= 7) {
+    // Cell cell_up_right = board[this.x_axis - b][this.y_axis + b];
+    // if (!cell_up_right.isOccupied) {
+    // cellsAllowed.add(cell_up_right);
+    // } else if (cell_up_right.isOccupied && cell_up_right.takenBy.color !=
+    // this.color) {
+    // cellsAllowed.add(cell_up_right);
+    // break;
+    // } else
+    // break;
+    // b++;
+    // }
+    // b = 1;
+    // while (this.x_axis + b <= 7 && this.y_axis - b >= 0) {
+    // Cell cell_down_left = board[this.x_axis + b][this.y_axis - b];
+    // if (!cell_down_left.isOccupied) {
+    // cellsAllowed.add(cell_down_left);
+    // } else if (cell_down_left.isOccupied && cell_down_left.takenBy.color !=
+    // this.color) {
+    // cellsAllowed.add(cell_down_left);
+    // break;
+    // } else
+    // break;
+    // b++;
+    // }
+    // break;
+
+    // default:
+    // break;
+    // }
+    // }
 
     void setPosition(int x_axisAmount, int y_axisAmount) {
         this.x_axis = x_axisAmount;
