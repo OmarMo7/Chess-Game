@@ -56,6 +56,25 @@ public class Game {
         // TODO: display options
     }
 
+    // public Piece getTheBlockingPiece(ArrayList<Cell> cellsAllowed1, ArrayList<Cell> cellsAllowed2) {
+    //     ArrayList<Cell> theSmallerOne = null;
+    //     ArrayList<Cell> theBiggerOne = null;
+    //     if (cellsAllowed1.size() > cellsAllowed2.size()) {
+    //         theSmallerOne = cellsAllowed2;
+    //         theBiggerOne = cellsAllowed1;
+    //     } else {
+    //         theSmallerOne = cellsAllowed1;
+    //         theBiggerOne = cellsAllowed2;
+    //     }
+
+    //     for (int i = 0; i < theSmallerOne.size(); i++) {
+    //         if (theSmallerOne.get(i).name != theBiggerOne.get(i).name) {
+    //             return theSmallerOne.get(i - 1).takenBy;
+    //         }
+    //     }
+    //     return null;
+    // }
+
     public static int validatePositiveInt(Scanner scanner) {
         int x;
         do {
@@ -106,10 +125,12 @@ public class Game {
                 default:
                     break;
             }
-            // TODO: if user enters notation of a piece that is not existed.. he shall not see the "Invalid move" message if his king was threatend
+            // TODO: if user enters notation of a piece that is not existed.. he shall not
+            // see the "Invalid move" message if his king was threatend
 
             if (ThreateningPiece != null && !ThreateningPiece.isEaten && player.get(8).isThreatened) {
                 ThreateningPiece.calculateCells();
+                // Piece blockingPiece = getTheBlockingPiece(cellsAllowed1, cellsAllowed2);
                 if (!ThreateningPiece.cellsAllowed.isEmpty()
                         && ThreateningPiece.cellsAllowed.contains(board[player.get(8).x_axis][player.get(8).y_axis])) {
                     System.out.println("Invalid move.. Your king is checked!");
@@ -224,7 +245,7 @@ public class Game {
             board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
             board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].isOccupied = false;
             pieceToBeMoved.setPosition(file, rank);
-            ArrayList <Piece> Other_Player = null;
+            ArrayList<Piece> Other_Player = null;
             if (WhiteToMove) {
                 Other_King = piecesOfPlayer2.get(8);
                 Other_Player = piecesOfPlayer2;
@@ -244,7 +265,7 @@ public class Game {
                 board[file][rank].takenBy = pieceToBeMoved;
                 board[file][rank].isOccupied = true;
             }
-            
+
             for (int i = 0; i < player.size(); i++) {
                 Piece CurrentPiece = player.get(i);
                 CurrentPiece.calculateCells();
