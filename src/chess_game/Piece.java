@@ -485,39 +485,97 @@ public class Piece {
 
     boolean kingInterDiagonal() {
 
+        boolean checkUpLeft = false;
+        boolean checkDownRight = false;
+        boolean checkUpRight = false;
+        boolean checkDownLeft = false;
         Piece theOtherKing = null;
-        theOtherKing = (WhiteToMove) ? piecesOfPlayer2.get(8) : piecesOfPlayer1.get(8);
+        theOtherKing = (WhiteToMove) ? piecesOfPlayer1.get(8) : piecesOfPlayer2.get(8);
         int king_xAxis = theOtherKing.x_axis;
         int king_yAxis = theOtherKing.y_axis;
 
         // To protect the king with a piece, a single cells at least has to be free
         int b = 2;
         while (this.x_axis + b <= 7 && this.y_axis + b <= 7) {
-            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
-                return true;
+            if (this.x_axis + b == king_xAxis && this.y_axis + b == king_yAxis) {
+                checkUpLeft = true;
+                break;
             }
             b++;
         }
+        if (checkUpLeft) {
+            b = 1;
+            while (this.x_axis + b <= king_xAxis && this.y_axis + b <= king_yAxis) {
+                Cell cell_up_left = board[this.x_axis + b][this.y_axis + b];
+                if (cell_up_left.isOccupied && cell_up_left.takenBy.color != this.color
+                        && cell_up_left.takenBy.type != "King") {
+                    this.capturedPieces.add(cell_up_left.takenBy);
+                }
+                b++;
+            }
+            return true;
+        }
+        ///////
         b = 2;
         while (this.x_axis - b >= 0 && this.y_axis - b >= 0) {
-            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
-                return true;
+            if (this.x_axis - b == king_xAxis && this.y_axis - b == king_yAxis) {
+                checkDownRight = true;
             }
             b++;
         }
+        if (checkDownRight) {
+            b = 1;
+            while (this.x_axis - b >= king_xAxis && this.y_axis - b >= king_yAxis) {
+                Cell check_down_right = board[this.x_axis - b][this.y_axis - b];
+                if (check_down_right.isOccupied && check_down_right.takenBy.color != this.color
+                        && check_down_right.takenBy.type != "King") {
+                    this.capturedPieces.add(check_down_right.takenBy);
+                }
+                b++;
+            }
+            return true;
+        }
+        ///////
         b = 2;
         while (this.x_axis - b >= 0 && this.y_axis + b <= 7) {
-            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+            if (this.x_axis - b == king_xAxis && this.y_axis + b == king_yAxis) {
+                checkUpRight = true;
                 return true;
             }
             b++;
         }
+        if (checkUpRight) {
+            b = 1;
+            while (this.x_axis - b >= king_xAxis && this.y_axis + b >= king_yAxis) {
+                Cell check_up_right = board[this.x_axis - b][this.y_axis + b];
+                if (check_up_right.isOccupied && check_up_right.takenBy.color != this.color
+                        && check_up_right.takenBy.type != "King") {
+                    this.capturedPieces.add(check_up_right.takenBy);
+                }
+                b++;
+            }
+            return true;
+        }
+        ///////
         b = 2;
         while (this.x_axis + b <= 7 && this.y_axis - b >= 0) {
-            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
+            if (this.x_axis + b == king_xAxis && this.y_axis - b == king_yAxis) {
+                checkDownLeft = true;
                 return true;
             }
             b++;
+        }
+        if (checkDownLeft) {
+            b = 1;
+            while (this.x_axis + b <= king_xAxis && this.y_axis - b >= king_yAxis) {
+                Cell check_down_left = board[this.x_axis + b][this.y_axis - b];
+                if (check_down_left.isOccupied && check_down_left.takenBy.color != this.color
+                        && check_down_left.takenBy.type != "King") {
+                    this.capturedPieces.add(check_down_left.takenBy);
+                }
+                b++;
+            }
+            return true;
         }
         return false;
     }
@@ -527,113 +585,134 @@ public class Piece {
         theOtherKing = (WhiteToMove) ? piecesOfPlayer2.get(8) : piecesOfPlayer1.get(8);
         int king_xAxis = theOtherKing.x_axis;
         int king_yAxis = theOtherKing.y_axis;
+        boolean checkUp = false;
+        boolean checkDown = false;
+        boolean checkRight = false;
+        boolean checkLeft = false;
 
         // To protect the king with a piece, a single cells at least has to be free
         int r = 2;
-        while (this.x_axis + r < 8) {
-            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
-                return true;
+        while (this.x_axis + r < king_xAxis) {
+            if (this.x_axis + r == king_xAxis && this.y_axis == king_yAxis) {
+                checkRight = true;
+                break;
             }
             r++;
         }
+        if (checkRight) {
+            r = 1;
+            while (this.x_axis + r < king_xAxis) {
+                Cell cell_up = board[this.x_axis + r][this.y_axis];
+                if (cell_up.isOccupied && cell_up.takenBy.color != this.color && cell_up.takenBy.type != "King") {
+                    this.capturedPieces.add(cell_up.takenBy);
+                }
+                r++;
+            }
+            return true;
+        }
+        ////
+
         r = 2;
-        while (this.x_axis - r >= 0) {
-            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
-                return true;
+        while (this.x_axis - r >= king_xAxis) {
+            if (this.x_axis - r == king_xAxis && this.y_axis == king_yAxis) {
+                checkLeft = true;
+                break;
             }
             r++;
         }
+        if (checkLeft) {
+            r = 1;
+            while (this.x_axis - r >= king_xAxis) {
+                Cell cell_left = board[this.x_axis - r][this.y_axis];
+                if (cell_left.isOccupied && cell_left.takenBy.color != this.color && cell_left.takenBy.type != "King") {
+                    this.capturedPieces.add(cell_left.takenBy);
+                }
+                r++;
+            }
+            return true;
+        }
         r = 2;
-        while (this.y_axis + r < 8) {
-            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
-                return true;
+        while (this.y_axis + r < king_yAxis) {
+            if (this.x_axis == king_xAxis && this.y_axis + r == king_yAxis) {
+                checkUp = true;
+                break;
             }
             r++;
         }
+        if (checkUp) {
+            r = 1;
+            while (this.y_axis + r < king_yAxis) {
+                Cell cell_up = board[this.x_axis][this.y_axis + r];
+                if (cell_up.isOccupied && cell_up.takenBy.color != this.color && cell_up.takenBy.type != "King") {
+                    this.capturedPieces.add(cell_up.takenBy);
+                }
+                r++;
+            }
+            return true;
+        }
         r = 2;
-        while (this.x_axis - r >= 0) {
-            if (this.x_axis == king_xAxis && this.y_axis == king_yAxis) {
-                return true;
+        while (this.y_axis - r >= king_yAxis) {
+            if (this.x_axis == king_xAxis && this.y_axis - r == king_yAxis) {
+                checkDown = true;
+                break;
             }
             r++;
+        }
+        if (checkDown) {
+            r = 1;
+            while (this.y_axis - r >= king_yAxis) {
+                Cell cell_down = board[this.x_axis][this.y_axis - r];
+                if (cell_down.isOccupied && cell_down.takenBy.color != this.color && cell_down.takenBy.type != "King") {
+                    this.capturedPieces.add(cell_down.takenBy);
+                }
+                r++;
+            }
+            return true;
         }
         return false;
-
     }
-    // void checkThreat(String pieceName,ArrayList<Piece> capturedPieces){
-    // switch (pieceName) {
-    // case 'Bishop':
-    // int b = 1;
-    // while (this.x_axis + b <= 7 && this.y_axis + b <= 7) {
-    // Cell cell_up_left = board[this.x_axis + b][this.y_axis + b];
-    // if (cell_up_left.isOccupied && cell_up_left.takenBy.color != this.color &&
-    // cell_up_left.takenBy.name != "King") {
-    // capturedPieces.add(cell_up_left.takenBy);
-    // break;
-    // } else
-    // break;
-    // b++;
-    // }
-    // if (capturedPieces.size() == 1){
-    // capturedPieces.get(0).isBlocking = true;
-    // }
-    // else{
-    // capturedPieces.clear();
-    // }
-    // b = 1;
-    // while (this.x_axis - b >= 0 && this.y_axis - b >= 0) {
-    // Cell cell_down_right = board[this.x_axis - b][this.y_axis - b];
-    // if (!cell_down_right.isOccupied) {
-    // cellsAllowed.add(cell_down_right);
-    // } else if (cell_down_right.isOccupied && cell_down_right.takenBy.color !=
-    // this.color) {
-    // cellsAllowed.add(cell_down_right);
-    // break;
-    // } else
-    // break;
-    // b++;
-    // }
-    // b = 1;
-    // while (this.x_axis - b >= 0 && this.y_axis + b <= 7) {
-    // Cell cell_up_right = board[this.x_axis - b][this.y_axis + b];
-    // if (!cell_up_right.isOccupied) {
-    // cellsAllowed.add(cell_up_right);
-    // } else if (cell_up_right.isOccupied && cell_up_right.takenBy.color !=
-    // this.color) {
-    // cellsAllowed.add(cell_up_right);
-    // break;
-    // } else
-    // break;
-    // b++;
-    // }
-    // b = 1;
-    // while (this.x_axis + b <= 7 && this.y_axis - b >= 0) {
-    // Cell cell_down_left = board[this.x_axis + b][this.y_axis - b];
-    // if (!cell_down_left.isOccupied) {
-    // cellsAllowed.add(cell_down_left);
-    // } else if (cell_down_left.isOccupied && cell_down_left.takenBy.color !=
-    // this.color) {
-    // cellsAllowed.add(cell_down_left);
-    // break;
-    // } else
-    // break;
-    // b++;
-    // }
-    // break;
 
-    // default:
-    // break;
-    // }
-    // }
+    void capturePiece() {
+        switch (this.type) {
+            case "Bishop":
+                if (kingInterDiagonal()) {
+                    if (this.capturedPieces.size() > 1) {
+                        this.capturedPieces.forEach((piece) -> piece.isBlocking = false);
+                        this.capturedPieces.clear();
+                    } else {
+                        this.capturedPieces.get(0).isBlocking = true;
+                    }
+                }
+                break;
+
+            case "Rock":
+                if (kingInterDiagonal()) {
+                    if (this.capturedPieces.size() > 1) {
+                        this.capturedPieces.forEach((piece) -> piece.isBlocking = false);
+                        this.capturedPieces.clear();
+                    } else {
+                        this.capturedPieces.get(0).isBlocking = true;
+                    }
+                }
+                break;
+            case "Queen":
+                if (kingInterDiagonal() || kingInterVertical()) {
+                    if (this.capturedPieces.size() > 1) {
+                        this.capturedPieces.forEach((piece) -> piece.isBlocking = false);
+                        this.capturedPieces.clear();
+                    } else {
+                        this.capturedPieces.get(0).isBlocking = true;
+                    }
+                }
+                break;
+            default:
+                this.capturedPieces.clear();
+        }
+    }
 
     void setPosition(int x_axisAmount, int y_axisAmount) {
         this.x_axis = x_axisAmount;
         this.y_axis = y_axisAmount;
     }
 
-    // void take(int x_axisAmount, int y_axisAmount, Piece toBeTaken) {
-    // this.x_axis += x_axisAmount;
-    // this.y_axis += y_axisAmount;
-    // toBeTaken.isEaten = true;
-    // }
 }
