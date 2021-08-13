@@ -76,7 +76,7 @@ public class Game {
 
     public boolean move(boolean White) {
         String name = new String();
-        int indexOfAttackers[] = new int[] { 0, 4, 6, 10, 1 };
+        int indexOfAttackers[] = new int[] { 0, 4, 6, 10, 14 };
         Piece pieceToBeMoved = new Piece("", "", "", 0, 0);
         Scanner input = new Scanner(System.in);
         do {
@@ -109,7 +109,6 @@ public class Game {
             }
             // TODO: if user enters notation of a piece that is not existed.. he shall not
             // see the "Invalid move" message if his king was threatend
-
             for (int i = 0; i < indexOfAttackers.length; i++) {
                 piecesOfPlayer1.get(indexOfAttackers[i]).capturePiece();
                 piecesOfPlayer2.get(indexOfAttackers[i]).capturePiece();
@@ -170,11 +169,6 @@ public class Game {
     }
 
     Piece detectPiece(String notation, boolean common, boolean takes, ArrayList<Piece> player, Piece pieceToBeMoved) {
-        if (pieceToBeMoved.isBlocking) {
-            System.out.println("You cannot move a defending piece!");
-            Piece emptyPiece = new Piece("", "", "", 0, 0);
-            return emptyPiece;
-        }
         // Test case 1 >>> Nf3
         // Test case 2 >>> N1f3
         // Test case 3 >>> N1xf3
@@ -231,6 +225,11 @@ public class Game {
             default:
                 System.out.println("ERROR!..Invalid piece notation");
                 break;
+        }
+        if (pieceToBeMoved.isBlocking) {
+            System.out.println("You cannot move a defending piece!");
+            Piece emptyPiece = new Piece("", "", "", 0, 0);
+            return emptyPiece;
         }
         if (pieceToBeMoved.name != "") {
             board[pieceToBeMoved.x_axis][pieceToBeMoved.y_axis].takenBy = null;
